@@ -46,7 +46,7 @@ export function Footer() {
           {/* Brand */}
           <div className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg ring-1 ring-border overflow-hidden">
-              <Image src="/3.png" alt="RP GORDAO" width={28} height={28} className="w-7 h-7 object-contain" />
+              <Image src="/RG.png" alt="RP GORDAO" width={28} height={28} className="w-7 h-7 object-contain" />
             </div>
             <span className="font-semibold tracking-tight">RP GORDAO</span>
           </div>

@@ -80,20 +80,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="flex h-16 items-center justify-between border-b px-5" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
           <Link href="/dashboard" className="flex items-center gap-3">
             <div className="relative h-9 w-9 shrink-0">
-              {/* Background layer */}
-              <Image
-                src="/RG.bg.png"
-                alt=""
-                fill
-                className="object-contain opacity-60"
-                priority
-              />
-              {/* Main logo on top */}
               <Image
                 src="/RG.png"
                 alt="RP GORDAO"
                 fill
-                className="object-contain relative z-10"
+                className="object-contain"
                 priority
               />
             </div>

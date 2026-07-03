@@ -149,8 +149,7 @@ export function HeroSection() {
       <nav className="relative z-10 flex items-center justify-between px-8 py-5 border-b border-white/[0.04]">
         <div className="flex items-center gap-3">
           <div className="relative h-9 w-9 shrink-0">
-            <Image src="/RG.bg.png" alt="" fill className="object-contain opacity-50" />
-            <Image src="/RG.png" alt="RP GORDAO" fill className="object-contain z-10 relative" />
+            <Image src="/RG.png" alt="RP GORDAO" fill className="object-contain" />
           </div>
           <div>
             <span className="text-white font-black tracking-widest uppercase text-sm">RP GORDAO</span>

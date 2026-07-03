@@ -374,7 +374,7 @@ export default function UsersPage() {
                     >
                       {user.avatarUrl ? (
                         <img
-                          src={user.avatarUrl || "/placeholder.svg"}
+                          src={user.avatarUrl || "/placeholder-user.svg"}
                           alt={user.username}
                           className="h-12 w-12 rounded-full object-cover ring-2 ring-border"
                         />
@@ -558,7 +558,7 @@ export default function UsersPage() {
             <div className="flex items-center gap-4">
               {selectedUser.avatarUrl ? (
                 <img
-                  src={selectedUser.avatarUrl || "/placeholder.svg"}
+                  src={selectedUser.avatarUrl || "/placeholder-user.svg"}
                   alt={selectedUser.username}
                   className="h-16 w-16 rounded-full object-cover ring-2 ring-border"
                 />

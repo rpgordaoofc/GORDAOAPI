@@ -13,9 +13,11 @@ export const metadata: Metadata = {
   generator: 'rpgordao',
   icons: {
     icon: [
-      { url: '/RG.png', type: 'image/png' },
+      { url: '/RG.png', type: 'image/png', sizes: '512x512' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
     apple: '/RG.png',
+    shortcut: '/RG.png',
   },
 }
 
