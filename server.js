@@ -1,19 +1,8 @@
-// Entry point para a Discloud — inicia o Next.js na porta 8080
+// Entry point para a Discloud — inicia o servidor standalone do Next.js
 process.env.NODE_ENV = 'production';
+process.env.PORT = process.env.PORT || '8080';
+process.env.HOSTNAME = '0.0.0.0';
 
-const { createServer } = require('http');
-const { parse } = require('url');
-const next = require('next');
-
-const port = parseInt(process.env.PORT || '8080', 10);
-const app = next({ dev: false });
-const handle = app.getRequestHandler();
-
-app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url, true);
-    handle(req, res, parsedUrl);
-  }).listen(port, '0.0.0.0', () => {
-    console.log(`> GordaoAdmin rodando em http://0.0.0.0:${port}`);
-  });
-});
+// O standalone gera seu próprio server.js em .next/standalone/server.js
+// Este arquivo apenas o invoca com as variáveis corretas
+require('./.next/standalone/server.js');
