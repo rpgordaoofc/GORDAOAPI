@@ -21,21 +21,22 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
+import { canPage, ROLE_COLORS, ROLE_LABELS, type Role } from "@/lib/role-permissions";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 const navigation = [
-  { name: "Overview",      href: "/dashboard",              icon: Squares2X2Icon },
-  { name: "Licencas",      href: "/dashboard/keys",         icon: KeyIcon },
-  { name: "Usuarios",      href: "/dashboard/users",        icon: UsersIcon },
-  { name: "Produtos",      href: "/dashboard/products",     icon: CubeIcon },
-  { name: "Acoes em Massa",href: "/dashboard/bulk-actions", icon: RectangleStackIcon },
-  { name: "Logs",          href: "/dashboard/logs",         icon: DocumentTextIcon },
-  { name: "Blacklist",     href: "/dashboard/blacklist",    icon: NoSymbolIcon },
-  { name: "Cupons",        href: "/dashboard/coupons",      icon: TagIcon },
-  { name: "Configuracoes", href: "/dashboard/settings",     icon: Cog6ToothIcon },
+  { name: "Overview",      href: "/dashboard",              icon: Squares2X2Icon,   page: "overview" as const },
+  { name: "Licencas",      href: "/dashboard/keys",         icon: KeyIcon,          page: "keys" as const },
+  { name: "Usuarios",      href: "/dashboard/users",        icon: UsersIcon,        page: "users" as const },
+  { name: "Produtos",      href: "/dashboard/products",     icon: CubeIcon,         page: "products" as const },
+  { name: "Acoes em Massa",href: "/dashboard/bulk-actions", icon: RectangleStackIcon, page: "bulkActions" as const },
+  { name: "Logs",          href: "/dashboard/logs",         icon: DocumentTextIcon, page: "logs" as const },
+  { name: "Blacklist",     href: "/dashboard/blacklist",    icon: NoSymbolIcon,     page: "blacklist" as const },
+  { name: "Cupons",        href: "/dashboard/coupons",      icon: TagIcon,          page: "coupons" as const },
+  { name: "Configuracoes", href: "/dashboard/settings",     icon: Cog6ToothIcon,    page: "settings" as const },
 ];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
@@ -44,15 +45,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const isOwner = admin?.role === "OWNER";
 
   const navigationItems = [
-    ...navigation,
-    ...(isOwner
-      ? [
-          {
-  name: "Admins",
-  href: "/dashboard/admin-users",
-  icon: ShieldCheckIcon,
-},
-        ]
+    ...navigation.filter(item => canPage(admin?.role, item.page)),
+    ...(isOwner || admin?.role === "SUPER_ADMIN"
+      ? [{ name: "Admins", href: "/dashboard/admin-users", icon: ShieldCheckIcon, page: "adminUsers" as const }]
       : []),
   ];
 
@@ -146,11 +141,18 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* Footer */}
         <div className="border-t border-sidebar-border p-3 space-y-2">
           <div className="rounded-lg border border-sidebar-border/60 bg-sidebar-accent/20 p-3">
-            <div className="flex items-center gap-2 text-xs text-sidebar-foreground/60">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="font-medium">Sistema Online</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs text-sidebar-foreground/60">
+                <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="font-medium">Sistema Online</span>
+              </div>
+              {admin?.role && (
+                <span className={`text-[9px] font-bold uppercase tracking-widest px-1.5 py-0.5 rounded border ${ROLE_COLORS[admin.role as Role] ?? "text-gray-400 bg-gray-400/10 border-gray-400/20"}`}>
+                  {ROLE_LABELS[admin.role as Role] ?? admin.role}
+                </span>
+              )}
             </div>
-            <p className="mt-0.5 text-[11px] text-sidebar-foreground/40">@RP GORDAO</p>
+            <p className="mt-0.5 text-[11px] text-sidebar-foreground/40">@{admin?.username ?? "RP GORDAO"}</p>
           </div>
           <Button
             variant="ghost"
