@@ -1,5 +1,4 @@
 .git
-.next
 node_modules
 admin-deploy.zip
 admin-src.zip

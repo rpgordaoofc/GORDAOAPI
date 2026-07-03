@@ -1,4 +1,4 @@
-// Entry point para a Discloud — inicia o Next.js em modo producao
+// Entry point para a Discloud - build já incluído no deploy
 process.env.NODE_ENV = 'production';
 
 const { createServer } = require('http');
@@ -16,4 +16,7 @@ app.prepare().then(() => {
   }).listen(port, '0.0.0.0', () => {
     console.log(`> GordaoAdmin rodando em http://0.0.0.0:${port}`);
   });
+}).catch(err => {
+  console.error('> Erro ao iniciar servidor:', err);
+  process.exit(1);
 });
