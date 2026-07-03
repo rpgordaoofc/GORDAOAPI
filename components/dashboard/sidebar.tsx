@@ -15,6 +15,8 @@ import {
   XMarkIcon,
   ArrowRightOnRectangleIcon,
   ShieldCheckIcon,
+  NoSymbolIcon,
+  TagIcon,
 } from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,41 +27,15 @@ interface SidebarProps {
   onClose: () => void;
 }
 const navigation = [
-  {
-    name: "Overview",
-    href: "/dashboard",
-    icon: Squares2X2Icon,
-  },
-  {
-    name: "Licencas",
-    href: "/dashboard/keys",
-    icon: KeyIcon,
-  },
-  {
-    name: "Usuarios",
-    href: "/dashboard/users",
-    icon: UsersIcon,
-  },
-  {
-    name: "Produtos",
-    href: "/dashboard/products",
-    icon: CubeIcon,
-  },
-  {
-    name: "Acoes em Massa",
-    href: "/dashboard/bulk-actions",
-    icon: RectangleStackIcon,
-  },
-  {
-    name: "Logs",
-    href: "/dashboard/logs",
-    icon: DocumentTextIcon,
-  },
-  {
-    name: "Configuracoes",
-    href: "/dashboard/settings",
-    icon: Cog6ToothIcon,
-  },
+  { name: "Overview",      href: "/dashboard",              icon: Squares2X2Icon },
+  { name: "Licencas",      href: "/dashboard/keys",         icon: KeyIcon },
+  { name: "Usuarios",      href: "/dashboard/users",        icon: UsersIcon },
+  { name: "Produtos",      href: "/dashboard/products",     icon: CubeIcon },
+  { name: "Acoes em Massa",href: "/dashboard/bulk-actions", icon: RectangleStackIcon },
+  { name: "Logs",          href: "/dashboard/logs",         icon: DocumentTextIcon },
+  { name: "Blacklist",     href: "/dashboard/blacklist",    icon: NoSymbolIcon },
+  { name: "Cupons",        href: "/dashboard/coupons",      icon: TagIcon },
+  { name: "Configuracoes", href: "/dashboard/settings",     icon: Cog6ToothIcon },
 ];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {

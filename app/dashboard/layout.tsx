@@ -6,6 +6,8 @@ import { ToastProvider } from "@/components/ui/toast-provider";
 import { AuthProvider, useAuth } from "@/lib/auth-context";
 import { LoginForm } from "@/components/dashboard/login-form";
 import { MouseBackground } from "@/components/dashboard/mouse-bg";
+import { AutoLock } from "@/components/dashboard/auto-lock";
+import { KeyboardShortcuts } from "@/components/dashboard/keyboard-shortcuts";
 
 interface SidebarContextType {
   sidebarOpen: boolean;
@@ -41,6 +43,8 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   return (
     <SidebarContext.Provider value={sidebarContext}>
       <MouseBackground />
+      <AutoLock />
+      <KeyboardShortcuts />
       <div className="relative z-10 min-h-screen">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="lg:pl-64">{children}</div>

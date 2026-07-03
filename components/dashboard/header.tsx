@@ -3,6 +3,7 @@
 import { Bars3Icon, BellIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { GlobalSearch } from "@/components/dashboard/global-search";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -47,6 +48,7 @@ export function Header({
         </div>
 
         <div className="flex items-center gap-2">
+          <GlobalSearch />
           <StatusBadge status={isMaintenanceMode ? "maintenance" : "active"} />
           <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-lg border border-border/50 bg-card/50">
             <BellIcon className="h-4 w-4" />
