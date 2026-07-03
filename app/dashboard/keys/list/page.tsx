@@ -12,17 +12,17 @@ import { Input } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { useSidebar } from "../../layout";
 import {
-  Key,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Loader2,
-  RefreshCw,
-  Filter,
-  Calendar,
-  Package,
-  User,
-} from "lucide-react";
+  KeyIcon as Key,
+  MagnifyingGlassIcon as Search,
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+  ArrowPathIcon as Loader2,
+  ArrowPathIcon as RefreshCw,
+  FunnelIcon as Filter,
+  CalendarDaysIcon as Calendar,
+  CubeIcon as Package,
+  UserIcon as User,
+} from "@heroicons/react/24/solid";
 import { getKeys, getProducts, type KeyItem, type Product } from "@/lib/api";
 import Loading from "@/app/loading"; // Import Loading component
 

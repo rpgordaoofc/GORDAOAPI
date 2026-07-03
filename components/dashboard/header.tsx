@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Bell, AlertTriangle } from "lucide-react";
+import { Bars3Icon, BellIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { cn } from "@/lib/utils";
@@ -23,7 +23,7 @@ export function Header({
       {/* Maintenance Banner */}
       {isMaintenanceMode && (
         <div className="flex items-center justify-center gap-2 bg-warning/10 px-4 py-2 text-sm text-warning">
-          <AlertTriangle className="h-4 w-4" />
+          <ExclamationTriangleIcon className="h-4 w-4" />
           <span>Sistema em manutenção - ações administrativas bloqueadas</span>
         </div>
       )}
@@ -36,7 +36,7 @@ export function Header({
             className="lg:hidden"
             onClick={onMenuClick}
           >
-            <Menu className="h-5 w-5" />
+            <Bars3Icon className="h-5 w-5" />
           </Button>
           <div>
             <h1 className="text-lg font-semibold text-foreground">{title}</h1>
@@ -49,7 +49,7 @@ export function Header({
         <div className="flex items-center gap-3">
           <StatusBadge status={isMaintenanceMode ? "maintenance" : "active"} />
           <Button variant="ghost" size="icon" className="relative">
-            <Bell className="h-5 w-5" />
+            <BellIcon className="h-5 w-5" />
             <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive" />
           </Button>
         </div>

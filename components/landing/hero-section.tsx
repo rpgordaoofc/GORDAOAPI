@@ -2,131 +2,144 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Shield, ArrowRight, Sparkles } from "lucide-react";
-import { EncryptedText } from "@/components/ui/encrypted-text";
-import Image from "next/image";
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
+  const [tick, setTick] = useState(0);
 
   useEffect(() => {
     setMounted(true);
+    const iv = setInterval(() => setTick((t) => t + 1), 60);
+    return () => clearInterval(iv);
   }, []);
 
+  const tags = ["LICENÇAS", "KEYS", "HWID LOCK", "PAINEL ADMIN", "WEBHOOKS", "PRODUTOS"];
+
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 grid-pattern opacity-30" />
-      <div className="absolute inset-0 noise" />
-      
-      {/* Gradient orbs */}
-      <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-muted/20 blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-muted/10 blur-3xl" />
+    <div className="min-h-screen bg-[#080808] relative overflow-hidden flex flex-col">
+      {/* Scanlines overlay */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 3px)",
+        }}
+      />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-24 lg:px-8">
-        {/* Navigation */}
-        <nav className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="mx-auto w-10 h-10 rounded-2xl bg-foreground/10 flex items-center justify-center">
-                        <Image src="/3.png" alt="Safety Logo" width={32} height={32} className="w-8 h-8 object-contain" priority />
-                      </div>
-            <EncryptedText
-              text="Safety API"
-              encryptedClassName="text-muted-foreground"
-              revealedClassName="text-foreground"
-              revealDelayMs={80}
-              className="text-xl font-bold tracking-tight"
-            />
+      {/* Red glow top */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full bg-red-700/20 blur-[120px] pointer-events-none" />
+      {/* Corner accents */}
+      <div className="absolute top-0 left-0 w-32 h-32 border-l-2 border-t-2 border-red-600/40 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-32 h-32 border-r-2 border-t-2 border-red-600/40 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-32 h-32 border-l-2 border-b-2 border-red-600/40 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-32 h-32 border-r-2 border-b-2 border-red-600/40 pointer-events-none" />
+
+      {/* Navbar */}
+      <nav className="relative z-10 flex items-center justify-between px-8 py-5 border-b border-white/[0.04]">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center">
+            <span className="text-white font-black text-xs">RG</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/dashboard"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Dashboard
-            </Link>
-            <Button asChild size="sm">
-              <Link href="/dashboard">Acessar</Link>
-            </Button>
-          </div>
-        </nav>
-
-        {/* Hero Content */}
-        <div className="mt-24 flex flex-col items-center text-center lg:mt-32">
-          {/* Badge */}
-          <div
-            className={`mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-2 backdrop-blur-sm transition-all duration-700 ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <Sparkles className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">
-              Plataforma de Licenciamento v2.0
-            </span>
-          </div>
-
-          {/* Headline */}
-          <h1
-            className={`max-w-4xl text-balance text-5xl font-bold tracking-tight transition-all duration-700 delay-100 sm:text-6xl lg:text-7xl ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            Gerencie suas licenças com{" "}
-            <span className="relative">
-              total controle
-              <span className="absolute -bottom-1 left-0 h-1 w-full bg-foreground/20" />
-            </span>
-          </h1>
-
-          {/* Subheadline */}
-          <p
-            className={`mt-6 max-w-2xl text-pretty text-lg text-muted-foreground transition-all duration-700 delay-200 sm:text-xl ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            Dashboard administrativa completa para gerenciar keys, usuários e
-            produtos. Controle de HWID, pausas, bans e muito mais em uma
-            interface moderna e intuitiva.
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            className={`mt-10 flex flex-col gap-4 sm:flex-row transition-all duration-700 delay-300 ${
-              mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-            }`}
-          >
-            <Button asChild size="lg" className="group gap-2 px-8">
-              <Link href="/dashboard">
-                Acessar Dashboard
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="gap-2 px-8 bg-transparent">
-              <Link href="#features">Ver Recursos</Link>
-            </Button>
-          </div>
+          <span className="text-white font-bold tracking-widest uppercase text-sm">
+            RP GORDAO
+          </span>
         </div>
+        <div className="flex items-center gap-6">
+          <Link href="/dashboard" className="text-white/40 hover:text-white/80 text-sm transition-colors">
+            Dashboard
+          </Link>
+          <Link
+            href="/dashboard"
+            className="bg-red-600 hover:bg-red-500 text-white text-sm font-semibold px-5 py-2 rounded transition-colors"
+          >
+            Acessar
+          </Link>
+        </div>
+      </nav>
 
-        {/* Stats */}
+      {/* Hero */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-20 text-center">
+        {/* Status bar */}
         <div
-          className={`mx-auto mt-24 grid max-w-4xl grid-cols-2 gap-8 border-t border-border pt-12 sm:grid-cols-4 transition-all duration-700 delay-500 ${
-            mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          className={`mb-8 inline-flex items-center gap-2 border border-red-600/30 bg-red-600/5 rounded px-4 py-1.5 transition-all duration-700 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
         >
+          <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse" />
+          <span className="text-xs text-red-400 font-mono tracking-widest uppercase">
+            Sistema Online — RP GORDAO API
+          </span>
+        </div>
+
+        {/* Main title */}
+        <h1
+          className={`text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-white leading-none mb-6 transition-all duration-700 delay-100 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          RP
+          <br />
+          <span className="text-red-600">GORDAO</span>
+        </h1>
+
+        {/* Subtitle */}
+        <p
+          className={`text-white/40 text-lg max-w-xl mb-10 transition-all duration-700 delay-200 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          Gerencie licenças, keys e usuários com total controle.
+          <br />
+          Painel administrativo exclusivo.
+        </p>
+
+        {/* CTA */}
+        <div
+          className={`flex gap-4 mb-16 transition-all duration-700 delay-300 ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <Link
+            href="/dashboard"
+            className="bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-3 rounded text-sm tracking-wider uppercase transition-all shadow-lg shadow-red-600/20"
+          >
+            Acessar Painel →
+          </Link>
+        </div>
+
+        {/* Tags */}
+        <div
+          className={`flex flex-wrap justify-center gap-2 transition-all duration-700 delay-500 ${
+            mounted ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="border border-white/[0.08] bg-white/[0.02] text-white/30 text-xs font-mono px-3 py-1 rounded tracking-widest"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom stats bar */}
+      <div className="relative z-10 border-t border-white/[0.04] px-8 py-4">
+        <div className="flex justify-center gap-12">
           {[
-            { label: "Licenças", value: "10K+" },
-            { label: "Uptime", value: "99.9%" },
-            { label: "Latência", value: "<50ms" },
-            { label: "Requisições/dia", value: "1M+" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-3xl font-bold tracking-tight">{stat.value}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+            { label: "UPTIME", value: "99.9%" },
+            { label: "LATÊNCIA", value: "<50ms" },
+            { label: "KEYS", value: "10K+" },
+            { label: "REQ/DIA", value: "1M+" },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <p className="text-white font-bold text-lg">{s.value}</p>
+              <p className="text-white/20 text-xs font-mono tracking-widest">{s.label}</p>
             </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -2,12 +2,12 @@
 
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { Type as type, LucideIcon } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 
 interface StatsCardProps {
   title: string;
   value: string | number;
-  icon: LucideIcon;
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
   description?: string;
   trend?: {
     value: number;

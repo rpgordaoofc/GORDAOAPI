@@ -145,8 +145,6 @@ const sampleArcs = [
 export function GlobeSection() {
   return (
     <section className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 noise" />
-      
       <div className="relative mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -159,14 +157,14 @@ export function GlobeSection() {
             Cobertura Global
           </span>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-balance">
-            Disponivel em qualquer lugar do mundo
+            Disponível em qualquer lugar do mundo
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Nossa infraestrutura distribuida garante baixa latencia e alta disponibilidade para usuarios em todos os continentes
+            Nossa infraestrutura distribuída garante baixa latência e alta disponibilidade para usuários em todos os continentes
           </p>
         </motion.div>
 
-        <div className="relative h-[500px] w-full">
+        <div className="relative h-[600px] w-full">
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background pointer-events-none z-10" />
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
@@ -174,15 +172,15 @@ export function GlobeSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12 text-center">
           {[
             { value: "99.9%", label: "Uptime Global" },
-            { value: "<50ms", label: "Latencia Media" },
+            { value: "<50ms", label: "Latência Média" },
             { value: "6", label: "Continentes" },
-            { value: "150+", label: "Paises" },
-          ].map((stat) => (
+            { value: "150+", label: "Países" },
+          ].map((stat, index) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
               <p className="text-3xl font-bold">{stat.value}</p>

@@ -1,4 +1,4 @@
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "https://safetyapi.squareweb.app").replace(/\/$/, "");
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "https://gordao0ofc.discloud.app").replace(/\/$/, "");
 const ADMIN_CSRF_STORAGE_KEY = "admin_csrf_token";
 const ADMIN_OWNER_TOKEN_STORAGE_KEY = "admin_owner_token";
 

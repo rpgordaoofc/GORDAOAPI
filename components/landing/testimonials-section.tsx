@@ -17,7 +17,7 @@ const testimonialsRow1 = [
   },
   {
     quote:
-      "Conseguimos reduzir pirataria em 95% apos implementar o Safety API. O sistema de HWID e extremamente eficiente.",
+      "Conseguimos reduzir pirataria em 95% apos implementar o RP GORDAO. O sistema de HWID e extremamente eficiente.",
     name: "Bruno Almeida",
     title: "CTO, GameForge Studios",
   },
@@ -32,7 +32,7 @@ const testimonialsRow1 = [
 const testimonialsRow2 = [
   {
     quote:
-      "A Safety API revolucionou como gerenciamos nossas licencas. O painel administrativo e intuitivo e as acoes em massa economizam horas de trabalho.",
+      "A RP GORDAO revolucionou como gerenciamos nossas licencas. O painel administrativo e intuitivo e as acoes em massa economizam horas de trabalho.",
     name: "Carlos Silva",
     title: "CTO, TechStart Brasil",
   },
@@ -44,7 +44,7 @@ const testimonialsRow2 = [
   },
   {
     quote:
-      "O suporte e excepcional e a API e extremamente confiavel. Nunca tivemos downtime desde que migramos para a Safety API.",
+      "O suporte e excepcional e a API e extremamente confiavel. Nunca tivemos downtime desde que migramos para a RP GORDAO.",
     name: "Pedro Santos",
     title: "Lead Developer, GameStudio",
   },
@@ -56,7 +56,7 @@ const testimonialsRow2 = [
   },
   {
     quote:
-      "Migramos de uma solucao propria para a Safety API e foi a melhor decisao. A economia de tempo e recursos foi significativa.",
+      "Migramos de uma solucao propria para a RP GORDAO e foi a melhor decisao. A economia de tempo e recursos foi significativa.",
     name: "Lucas Oliveira",
     title: "Tech Lead, StartupXYZ",
   },
@@ -103,7 +103,7 @@ export function TestimonialsSection() {
             O que nossos clientes dizem
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Empresas de todo o mundo confiam na Safety API para proteger seus softwares
+            Empresas de todo o mundo confiam na RP GORDAO para proteger seus softwares
           </p>
         </div>
       </div>

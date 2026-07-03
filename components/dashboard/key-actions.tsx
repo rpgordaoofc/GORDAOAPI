@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import {
-  RotateCcw,
-  Unlink,
-  Calendar,
-  Pause,
-  Play,
-  Ban,
-  Shield,
-} from "lucide-react";
+  ArrowPathIcon,
+  LinkSlashIcon,
+  CalendarDaysIcon,
+  PauseIcon,
+  PlayIcon,
+  NoSymbolIcon,
+  ShieldCheckIcon,
+} from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Modal, ConfirmModal } from "@/components/ui/modal";
@@ -177,7 +177,7 @@ export function KeyActions({
           onClick={() => setShowResetModal(true)}
           disabled={loading === "reset"}
         >
-          <RotateCcw className="h-4 w-4" />
+          <ArrowPathIcon className="h-4 w-4" />
           Reset HWID
         </Button>
 
@@ -188,7 +188,7 @@ export function KeyActions({
           onClick={() => setShowUnlinkModal(true)}
           disabled={loading === "unlink"}
         >
-          <Unlink className="h-4 w-4" />
+          <LinkSlashIcon className="h-4 w-4" />
           Desvincular
         </Button>
 
@@ -199,7 +199,7 @@ export function KeyActions({
           onClick={() => setShowDaysModal(true)}
           disabled={loading === "days"}
         >
-          <Calendar className="h-4 w-4" />
+          <CalendarDaysIcon className="h-4 w-4" />
           Adicionar Dias
         </Button>
 
@@ -212,12 +212,12 @@ export function KeyActions({
         >
           {currentStatus?.paused ? (
             <>
-              <Play className="h-4 w-4" />
+              <PlayIcon className="h-4 w-4" />
               Despausar
             </>
           ) : (
             <>
-              <Pause className="h-4 w-4" />
+              <PauseIcon className="h-4 w-4" />
               Pausar
             </>
           )}
@@ -234,12 +234,12 @@ export function KeyActions({
         >
           {currentStatus?.banned ? (
             <>
-              <Shield className="h-4 w-4" />
+              <ShieldCheckIcon className="h-4 w-4" />
               Remover Ban
             </>
           ) : (
             <>
-              <Ban className="h-4 w-4" />
+              <NoSymbolIcon className="h-4 w-4" />
               Banir Key
             </>
           )}

@@ -11,20 +11,21 @@ import { Modal, ModalHeader, ModalTitle, ModalDescription, ModalFooter } from "@
 import { useToast } from "@/components/ui/toast-provider";
 import { useSidebar } from "../layout";
 import {
-  Package,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Loader2,
-  Calendar,
-  Plus,
-  MoreVertical,
-  Pencil,
-  Trash2,
-  Lock,
-  Unlock,
-  RefreshCw,
-} from "lucide-react";
+  CubeIcon as Package,
+  MagnifyingGlassIcon as Search,
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+  ArrowPathIcon as Loader2,
+  CalendarDaysIcon as Calendar,
+  PlusIcon as Plus,
+  ClipboardDocumentIcon as Copy,
+  EllipsisVerticalIcon as MoreVertical,
+  PencilSquareIcon as Pencil,
+  TrashIcon as Trash2,
+  LockClosedIcon as Lock,
+  LockOpenIcon as Unlock,
+  ArrowPathIcon as RefreshCw,
+} from "@heroicons/react/24/solid";
 import {
   getProducts,
   createProduct,
@@ -46,7 +47,7 @@ interface ProductWithHwid extends Product {
 }
 
 export default function ProductsPage() {
-  const { toggle: toggleSidebar, sidebarOpen, setSidebarOpen } = useSidebar();
+  const { toggle: toggleSidebar } = useSidebar();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductWithHwid[]>([]);
   const [page, setPage] = useState(1);
@@ -177,6 +178,24 @@ export default function ProductsPage() {
     setEditModalOpen(true);
   };
 
+  const handleCopyHash = async (productHash?: string | null) => {
+    if (!productHash) {
+      addToast({
+        title: "Sem hash",
+        description: "Este produto não possui hash para copiar",
+        variant: "warning",
+      });
+      return;
+    }
+
+    await navigator.clipboard.writeText(productHash);
+    addToast({
+      title: "Hash copiado",
+      description: "Hash do produto copiado para a área de transferência",
+      variant: "success",
+    });
+  };
+
   const handleDeleteProduct = async (product: ProductWithHwid) => {
     const confirmed = window.confirm(`Tem certeza que deseja apagar o produto "${product.name}"?`);
     if (!confirmed) return;
@@ -259,8 +278,24 @@ export default function ProductsPage() {
 
         {/* Products Grid */}
         {loading ? (
-          <div className="flex h-64 items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {[...Array(6)].map((_, index) => (
+              <Card key={index} className="animate-pulse">
+                <CardHeader className="pb-3">
+                  <div className="h-5 w-2/3 rounded bg-muted" />
+                  <div className="h-3 w-1/2 rounded bg-muted" />
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="h-9 w-full rounded bg-muted" />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="h-8 rounded bg-muted" />
+                      <div className="h-8 rounded bg-muted" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         ) : products.length === 0 ? (
           <Card>
@@ -279,32 +314,72 @@ export default function ProductsPage() {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-3">
             {products.map((product, index) => (
               <Card
                 key={product._id}
-                className="animate-slide-up opacity-0"
+                className="animate-slide-up opacity-0 border-border/80"
                 style={{
-                  animationDelay: `${index * 50}ms`,
+                  animationDelay: `${index * 40}ms`,
                   animationFillMode: "forwards",
                 }}
               >
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="rounded-lg bg-primary/10 p-2">
-                        <Package className="h-5 w-5 text-primary" />
+                <CardContent className="py-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1 space-y-3">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-muted">
+                          <Package className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <CardTitle className="truncate text-base font-semibold leading-none">
+                            {product.name}
+                          </CardTitle>
+                          <div className="mt-1.5 flex min-w-0 items-center gap-1.5">
+                            <p className="truncate font-mono text-xs leading-none text-muted-foreground">
+                              {product.productHash || "Sem hash"}
+                            </p>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 shrink-0 p-0 text-muted-foreground hover:text-foreground"
+                              onClick={() => void handleCopyHash(product.productHash)}
+                              title="Copiar hash"
+                            >
+                              <Copy className="h-3.5 w-3.5" />
+                            </Button>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <CardTitle className="text-base">{product.name}</CardTitle>
-                        <p className="mt-0.5 font-mono text-[11px] text-muted-foreground break-all">
-                          {product.productHash || "-"}
-                        </p>
+
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                        <span className="inline-flex items-center gap-1.5 rounded-md bg-muted/40 px-2 py-1 leading-none">
+                          {product.hwidLockEnabled ? (
+                            <Lock className="h-3.5 w-3.5 shrink-0" />
+                          ) : (
+                            <Unlock className="h-3.5 w-3.5 shrink-0" />
+                          )}
+                          <span>HWID {product.hwidLockEnabled ? "Ativo" : "Inativo"}</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 leading-none">
+                          <Calendar className="h-3.5 w-3.5 shrink-0" />
+                          <span>Criado: {new Date(product.createdAt).toLocaleDateString("pt-BR")}</span>
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 leading-none">
+                          <Calendar className="h-3.5 w-3.5 shrink-0" />
+                          <span>Atualizado: {new Date(product.updatedAt).toLocaleDateString("pt-BR")}</span>
+                        </span>
                       </div>
                     </div>
+
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 bg-transparent">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="mt-0.5 h-8 w-8 shrink-0 p-0 text-muted-foreground hover:text-foreground"
+                        >
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -337,39 +412,6 @@ export default function ProductsPage() {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between rounded-lg border border-border bg-muted/30 p-2.5">
-                      <div className="flex items-center gap-2">
-                        <Lock className="h-4 w-4 text-muted-foreground" />
-                        <span className="text-sm">HWID Lock</span>
-                      </div>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                        product.hwidLockEnabled 
-                          ? "bg-success/10 text-success" 
-                          : "bg-muted text-muted-foreground"
-                      }`}>
-                        {product.hwidLockEnabled ? "Ativo" : "Inativo"}
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-muted-foreground">Criado em</p>
-                        <p className="mt-1 flex items-center gap-1.5 font-medium">
-                          <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-                          {new Date(product.createdAt).toLocaleDateString("pt-BR")}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-muted-foreground">Atualizado em</p>
-                        <p className="mt-1 flex items-center gap-1.5 font-medium">
-                          <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-                          {new Date(product.updatedAt).toLocaleDateString("pt-BR")}
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </CardContent>
               </Card>

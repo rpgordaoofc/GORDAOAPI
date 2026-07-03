@@ -8,19 +8,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useSidebar } from "../layout";
 import {
-  FileText,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Loader2,
-  RefreshCw,
-  Filter,
-  AlertTriangle,
-  Info,
-  AlertCircle,
-  Clock,
-  Globe,
-} from "lucide-react";
+  DocumentTextIcon as FileText,
+  MagnifyingGlassIcon as Search,
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+  ArrowPathIcon as Loader2,
+  ArrowPathIcon as RefreshCw,
+  FunnelIcon as Filter,
+  ExclamationTriangleIcon as AlertTriangle,
+  InformationCircleIcon as Info,
+  ExclamationCircleIcon as AlertCircle,
+  ClockIcon as Clock,
+  GlobeAltIcon as Globe,
+} from "@heroicons/react/24/solid";
 import { getAuditLogs, type AuditLogItem } from "@/lib/api";
 
 function safeNumber(v: unknown): number | null {

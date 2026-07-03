@@ -14,7 +14,7 @@ import {
   ownerUpdateAdmin,
   type OwnerAdminUser,
 } from "@/lib/api";
-import { Loader2, UserCog } from "lucide-react";
+import { ArrowPathIcon as Loader2, ShieldCheckIcon as UserCog } from "@heroicons/react/24/solid";
 
 const ROLE_OPTIONS = ["OWNER", "SUPER_ADMIN", "ADMIN", "SUPPORT", "VIEWER"] as const;
 const STATUS_OPTIONS = ["ACTIVE", "DISABLED"] as const;

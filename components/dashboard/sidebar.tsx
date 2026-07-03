@@ -3,18 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { motion } from "motion/react";
 import {
-  LayoutDashboard,
-  Key,
-  Layers,
-  Settings,
-  X,
-  LogOut,
-  Package,
-  Users,
-  FileText,
-  UserCog,
-} from "lucide-react";
+  Squares2X2Icon,
+  KeyIcon,
+  UsersIcon,
+  CubeIcon,
+  RectangleStackIcon,
+  DocumentTextIcon,
+  Cog6ToothIcon,
+  XMarkIcon,
+  ArrowRightOnRectangleIcon,
+  ShieldCheckIcon,
+} from "@heroicons/react/24/solid";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
@@ -23,42 +24,41 @@ interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 const navigation = [
   {
     name: "Overview",
     href: "/dashboard",
-    icon: LayoutDashboard,
+    icon: Squares2X2Icon,
   },
   {
     name: "Licencas",
     href: "/dashboard/keys",
-    icon: Key,
+    icon: KeyIcon,
   },
   {
     name: "Usuarios",
     href: "/dashboard/users",
-    icon: Users,
+    icon: UsersIcon,
   },
   {
     name: "Produtos",
     href: "/dashboard/products",
-    icon: Package,
+    icon: CubeIcon,
   },
   {
     name: "Acoes em Massa",
     href: "/dashboard/bulk-actions",
-    icon: Layers,
+    icon: RectangleStackIcon,
   },
   {
     name: "Logs",
     href: "/dashboard/logs",
-    icon: FileText,
+    icon: DocumentTextIcon,
   },
   {
     name: "Configuracoes",
     href: "/dashboard/settings",
-    icon: Settings,
+    icon: Cog6ToothIcon,
   },
 ];
 
@@ -72,10 +72,10 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     ...(isOwner
       ? [
           {
-            name: "Admins",
-            href: "/dashboard/admin-users",
-            icon: UserCog,
-          },
+  name: "Admins",
+  href: "/dashboard/admin-users",
+  icon: ShieldCheckIcon,
+},
         ]
       : []),
   ];
@@ -101,10 +101,10 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-6">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary">
-              <Image src="/2.png" alt="Safety Logo" width={16} height={16} className="h-6 w-6 object-contain" priority />
+              <Image src="/2.png" alt="RP GORDAO" width={16} height={16} className="h-6 w-6 object-contain" priority />
             </div>
             <span className="font-semibold text-sidebar-foreground">
-              Safety API
+              RP GORDAO
             </span>
           </Link>
           <Button
@@ -113,12 +113,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="lg:hidden"
             onClick={onClose}
           >
-            <X className="h-5 w-5" />
+            <XMarkIcon className="h-5 w-5" />
           </Button>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 space-y-1 p-4">
+        <nav className="flex-1 space-y-1.5 p-4">
           {navigationItems.map((item) => {
             const isActive =
               pathname === item.href ||
@@ -129,15 +129,23 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 href={item.href}
                 onClick={onClose}
                 className={cn(
-                  "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                  "group relative flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors",
                   isActive
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                    ? "bg-sidebar-accent/50 text-sidebar-foreground"
+                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground"
                 )}
               >
+                {isActive && (
+                  <motion.span
+                    layoutId="sidebar-active-indicator"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-sidebar-primary"
+                  />
+                )}
                 <item.icon
+                  strokeWidth={2.35}
                   className={cn(
-                    "h-5 w-5 transition-colors",
+                    "h-4 w-4 transition-colors",
                     isActive
                       ? "text-sidebar-primary"
                       : "text-sidebar-foreground/50 group-hover:text-sidebar-foreground"
@@ -151,13 +159,13 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
         {/* Footer */}
         <div className="border-t border-sidebar-border p-4 space-y-3">
-          <div className="rounded-lg bg-sidebar-accent/50 p-3">
+          <div className="rounded-md border border-sidebar-border p-3">
             <div className="flex items-center gap-2 text-xs text-sidebar-foreground/70">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" />
-              Sistema Operacional
+              <span className="h-1.5 w-1.5 rounded-full bg-sidebar-primary" />
+              Sistema Online
             </div>
             <p className="mt-1 text-xs text-sidebar-foreground/50">
-             @Safety API | by nash
+             @RP GORDAO
             </p>
           </div>
           <Button
@@ -165,7 +173,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="w-full justify-start gap-2 text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
             onClick={() => { void logout(); }}
           >
-            <LogOut className="h-4 w-4" />
+            <ArrowRightOnRectangleIcon className="h-4 w-4" />
             Sair
           </Button>
         </div>

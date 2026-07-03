@@ -5,25 +5,43 @@ import { Header } from "@/components/dashboard/header";
 import { useSidebar } from "./layout";
 import { StatsCard } from "@/components/ui/stats-card";
 import {
-  Key,
-  Users,
-  Package,
-  CheckCircle,
-  Activity,
-  TrendingUp,
-  Ban,
-  Pause,
-  Clock,
-  ShieldAlert,
-  Loader2,
-  RefreshCw,
-} from "lucide-react";
+  KeyIcon as Key,
+  UsersIcon as Users,
+  CubeIcon as Package,
+  CheckCircleIcon as CheckCircle,
+  SignalIcon as Activity,
+  ArrowTrendingUpIcon as TrendingUp,
+  NoSymbolIcon as Ban,
+  PauseIcon as Pause,
+  ClockIcon as Clock,
+  ShieldExclamationIcon as ShieldAlert,
+  ArrowPathIcon as Loader2,
+  ArrowPathIcon as RefreshCw,
+} from "@heroicons/react/24/solid";
 import { getOverview, getAuditLogs, type OverviewData, type AuditLogItem } from "@/lib/api";
 import { useToast } from "@/components/ui/toast-provider";
 import { AuditLog, type AuditLogEntry, type AuditAction } from "@/components/dashboard/audit-log";
 import { AlertList, type AlertVariant } from "@/components/ui/alert-action";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { ChartContainer } from "@/components/ui/chart";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  AreaChart,
+  Area,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  ResponsiveContainer,
+} from "recharts";
 
 // Extended stats interface
 interface ExtendedStats extends OverviewData {
@@ -113,6 +131,7 @@ export default function DashboardOverview() {
   const [alerts, setAlerts] = useState<ActionAlert[]>([]);
   const [auditEntries, setAuditEntries] = useState<AuditLogEntry[]>([]);
   const [auditLoading, setAuditLoading] = useState(true);
+  const [categoryChartMode, setCategoryChartMode] = useState<"bars" | "area" | "radar">("bars");
   const { addToast } = useToast();
 
   const addAlert = useCallback((variant: AlertVariant, title: string, description?: string) => {
@@ -278,9 +297,11 @@ export default function DashboardOverview() {
                   <ShieldAlert className="h-5 w-5 text-muted-foreground" />
                   Audit Log
                 </h3>
-                <p className="mt-1 text-xs lg:text-sm text-muted-foreground">
-                  Atividades recentes em tempo real
-                </p>
+                <div className="mt-1 flex items-center gap-2 text-xs lg:text-sm text-muted-foreground">
+                  <span>Atividades recentes em tempo real</span>
+                  <span className="hidden sm:inline">•</span>
+                  <span>{auditEntries.length} evento(s)</span>
+                </div>
               </div>
               <div className="flex items-center gap-2">
                 <Button
@@ -288,22 +309,28 @@ export default function DashboardOverview() {
                   size="sm"
                   onClick={fetchAuditLogs}
                   disabled={auditLoading}
-                  className="bg-transparent"
+                  className="bg-transparent gap-2"
                 >
                   <RefreshCw className={`h-4 w-4 ${auditLoading ? "animate-spin" : ""}`} />
+                  Atualizar
                 </Button>
                 <Button variant="outline" size="sm" asChild className="bg-transparent">
                   <Link href="/dashboard/logs">Ver Todos</Link>
                 </Button>
               </div>
             </div>
-            <div className="mt-6 max-h-[400px] overflow-y-auto pr-2">
+            <div className="mt-6">
               {auditLoading && auditEntries.length === 0 ? (
-                <div className="flex h-32 items-center justify-center">
-                  <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                <div className="space-y-2">
+                  {[...Array(4)].map((_, index) => (
+                    <div
+                      key={index}
+                      className="h-14 rounded-lg border border-border/60 bg-muted/30 animate-pulse"
+                    />
+                  ))}
                 </div>
               ) : (
-                <AuditLog entries={auditEntries} maxEntries={8} />
+                <AuditLog entries={auditEntries} maxEntries={7} />
               )}
             </div>
           </div>
@@ -368,46 +395,188 @@ export default function DashboardOverview() {
           </div>
         </div>
 
-        {/* Keys Status Overview */}
         <div
-          className="mt-8 rounded-xl border border-border bg-card p-6 animate-slide-up opacity-0"
+          className="mt-8 grid gap-4 lg:gap-6 lg:grid-cols-5 animate-slide-up opacity-0"
           style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}
         >
-          <h3 className="text-lg font-semibold">Distribuicao de Status das Keys</h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Visao geral do estado das licencas no sistema
-          </p>
-          <div className="mt-6 grid gap-4 sm:grid-cols-5">
-            <StatusCard
-              label="Ativas"
-              count={data?.activeKeys ?? 0}
-              total={data?.keys ?? 1}
-              color="bg-emerald-500"
-            />
-            <StatusCard
-              label="Pausadas"
-              count={data?.pausedKeys ?? 0}
-              total={data?.keys ?? 1}
-              color="bg-amber-500"
-            />
-            <StatusCard
-              label="Banidas"
-              count={data?.bannedKeys ?? 0}
-              total={data?.keys ?? 1}
-              color="bg-red-500"
-            />
-            <StatusCard
-              label="Expiradas"
-              count={data?.expiredKeys ?? 0}
-              total={data?.keys ?? 1}
-              color="bg-muted-foreground"
-            />
-            <StatusCard
-              label="Pendentes"
-              count={data?.pendingKeys ?? 0}
-              total={data?.keys ?? 1}
-              color="bg-blue-500"
-            />
+          <div className="lg:col-span-2 rounded-xl border border-border bg-card p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-semibold">Distribuicao de Licencas</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">Status atual das keys</p>
+              </div>
+              <span className="text-2xl font-bold tabular-nums">{loading ? "-" : data?.keys ?? 0}</span>
+            </div>
+
+            <ChartContainer
+              className="mx-auto mt-4 aspect-square max-h-[200px]"
+              config={{
+                active: { label: "Ativas", color: "oklch(0.72 0.19 142)" },
+                paused: { label: "Pausadas", color: "oklch(0.75 0.18 55)" },
+                banned: { label: "Banidas", color: "oklch(0.63 0.24 25)" },
+                expired: { label: "Expiradas", color: "oklch(0.55 0 0)" },
+                pending: { label: "Pendentes", color: "oklch(0.62 0.18 250)" },
+              }}
+            >
+              <ResponsiveContainer>
+                <PieChart>
+                  <Pie
+                    data={[
+                      { key: "active", name: "Ativas", value: data?.activeKeys ?? 0, fill: "var(--color-active)" },
+                      { key: "paused", name: "Pausadas", value: data?.pausedKeys ?? 0, fill: "var(--color-paused)" },
+                      { key: "banned", name: "Banidas", value: data?.bannedKeys ?? 0, fill: "var(--color-banned)" },
+                      { key: "expired", name: "Expiradas", value: data?.expiredKeys ?? 0, fill: "var(--color-expired)" },
+                      { key: "pending", name: "Pendentes", value: data?.pendingKeys ?? 0, fill: "var(--color-pending)" },
+                    ]}
+                    dataKey="value"
+                    nameKey="name"
+                    innerRadius={55}
+                    outerRadius={85}
+                    stroke="var(--background)"
+                    strokeWidth={2}
+                    isAnimationActive={!loading}
+                  >
+                    {[
+                      "var(--color-active)",
+                      "var(--color-paused)",
+                      "var(--color-banned)",
+                      "var(--color-expired)",
+                      "var(--color-pending)",
+                    ].map((fill, i) => (
+                      <Cell key={i} fill={fill} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.72 0.19 142)" }} />
+                Ativas <span className="font-medium text-foreground">{loading ? "-" : data?.activeKeys ?? 0}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.75 0.18 55)" }} />
+                Pausadas <span className="font-medium text-foreground">{loading ? "-" : data?.pausedKeys ?? 0}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.63 0.24 25)" }} />
+                Banidas <span className="font-medium text-foreground">{loading ? "-" : data?.bannedKeys ?? 0}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.55 0 0)" }} />
+                Expiradas <span className="font-medium text-foreground">{loading ? "-" : data?.expiredKeys ?? 0}</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.62 0.18 250)" }} />
+                Pendentes <span className="font-medium text-foreground">{loading ? "-" : data?.pendingKeys ?? 0}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-3 rounded-xl border border-border bg-card p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-semibold">Status por Categoria</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">Comparativo entre os status das licencas</p>
+              </div>
+              <div className="flex gap-0.5 rounded-lg bg-muted/40 p-0.5">
+                <button
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                    categoryChartMode === "bars" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  onClick={() => setCategoryChartMode("bars")}
+                  type="button"
+                >
+                  Barras
+                </button>
+                <button
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                    categoryChartMode === "area" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  onClick={() => setCategoryChartMode("area")}
+                  type="button"
+                >
+                  Area
+                </button>
+                <button
+                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
+                    categoryChartMode === "radar" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  onClick={() => setCategoryChartMode("radar")}
+                  type="button"
+                >
+                  Radar
+                </button>
+              </div>
+            </div>
+
+            <ChartContainer
+              className="mt-4 h-[240px] w-full"
+              config={{
+                value: { label: "Keys", color: "oklch(0.7 0 0)" },
+              }}
+            >
+              <ResponsiveContainer>
+                {categoryChartMode === "bars" ? (
+                  <BarChart
+                    data={[
+                      { name: "Ativas", value: data?.activeKeys ?? 0, fill: "var(--color-active)" },
+                      { name: "Pausadas", value: data?.pausedKeys ?? 0, fill: "var(--color-paused)" },
+                      { name: "Banidas", value: data?.bannedKeys ?? 0, fill: "var(--color-banned)" },
+                      { name: "Expiradas", value: data?.expiredKeys ?? 0, fill: "var(--color-expired)" },
+                      { name: "Pendentes", value: data?.pendingKeys ?? 0, fill: "var(--color-pending)" },
+                    ]}
+                    margin={{ top: 6, right: 12, bottom: 0, left: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                    <YAxis tickLine={false} axisLine={false} allowDecimals={false} />
+                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
+                      {[
+                        "var(--color-active)",
+                        "var(--color-paused)",
+                        "var(--color-banned)",
+                        "var(--color-expired)",
+                        "var(--color-pending)",
+                      ].map((fill, i) => (
+                        <Cell key={i} fill={fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                ) : categoryChartMode === "area" ? (
+                  <AreaChart
+                    data={[
+                      { name: "Ativas", value: data?.activeKeys ?? 0 },
+                      { name: "Pausadas", value: data?.pausedKeys ?? 0 },
+                      { name: "Banidas", value: data?.bannedKeys ?? 0 },
+                      { name: "Expiradas", value: data?.expiredKeys ?? 0 },
+                      { name: "Pendentes", value: data?.pendingKeys ?? 0 },
+                    ]}
+                    margin={{ top: 6, right: 12, bottom: 0, left: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                    <YAxis tickLine={false} axisLine={false} allowDecimals={false} />
+                    <Area type="monotone" dataKey="value" stroke="var(--color-value)" fill="var(--color-value)" fillOpacity={0.18} />
+                  </AreaChart>
+                ) : (
+                  <RadarChart
+                    data={[
+                      { name: "Ativas", value: data?.activeKeys ?? 0 },
+                      { name: "Pausadas", value: data?.pausedKeys ?? 0 },
+                      { name: "Banidas", value: data?.bannedKeys ?? 0 },
+                      { name: "Expiradas", value: data?.expiredKeys ?? 0 },
+                      { name: "Pendentes", value: data?.pendingKeys ?? 0 },
+                    ]}
+                  >
+                    <PolarGrid />
+                    <PolarAngleAxis dataKey="name" />
+                    <Radar dataKey="value" stroke="var(--color-value)" fill="var(--color-value)" fillOpacity={0.18} />
+                  </RadarChart>
+                )}
+              </ResponsiveContainer>
+            </ChartContainer>
           </div>
         </div>
       </main>

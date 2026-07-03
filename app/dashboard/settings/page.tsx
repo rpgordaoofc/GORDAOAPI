@@ -11,22 +11,22 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/toast-provider";
 import { useSidebar } from "../layout";
 import {
-  Settings,
-  AlertTriangle,
-  CheckCircle,
-  Power,
-  Shield,
-  Lock,
-  Key,
-  Globe,
-  Bell,
-  Database,
-  Copy,
-  RefreshCw,
-  Loader2,
-  Save,
-  Webhook,
-} from "lucide-react";
+  Cog6ToothIcon as Settings,
+  ExclamationTriangleIcon as AlertTriangle,
+  CheckCircleIcon as CheckCircle,
+  PowerIcon as Power,
+  ShieldCheckIcon as Shield,
+  LockClosedIcon as Lock,
+  KeyIcon as Key,
+  GlobeAltIcon as Globe,
+  BellIcon as Bell,
+  CircleStackIcon as Database,
+  ClipboardDocumentIcon as Copy,
+  ArrowPathIcon as RefreshCw,
+  ArrowPathIcon as Loader2,
+  BookmarkSquareIcon as Save,
+  LinkIcon as Webhook,
+} from "@heroicons/react/24/solid";
 import {
   setMaintenance,
   getSettings,
@@ -379,7 +379,7 @@ export default function SettingsPage() {
                 <CardContent className="space-y-3">
                   <InfoRow
                     label="Base URL"
-                    value={settings?.apiBaseUrl || "https://api.safetyauth.xyz"}
+                    value={settings?.apiBaseUrl || "https://api.gordao0ofc.discloud.app"}
                     onCopy={(v) => copyToClipboard(v, "Base URL")}
                   />
                   <InfoRow label="Versao" value={settings?.apiVersion || "v2.0.0"} />
@@ -429,7 +429,7 @@ export default function SettingsPage() {
                       type="text"
                       value={webhookUsername}
                       onChange={(e) => setWebhookUsername(e.target.value)}
-                      placeholder="Safety API"
+                      placeholder="RP GORDAO"
                       className="mt-1.5"
                     />
                   </div>

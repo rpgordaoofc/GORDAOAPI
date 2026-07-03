@@ -9,14 +9,14 @@ import { Input } from "@/components/ui/input";
 import { ConfirmModal } from "@/components/ui/modal";
 import { useToast } from "@/components/ui/toast-provider";
 import {
-  Layers,
-  Pause,
-  Play,
-  RotateCcw,
-  Calendar,
-  AlertTriangle,
-  Trash2,
-} from "lucide-react";
+  RectangleStackIcon as Layers,
+  PauseIcon as Pause,
+  PlayIcon as Play,
+  ArrowPathIcon as RotateCcw,
+  CalendarDaysIcon as Calendar,
+  ExclamationTriangleIcon as AlertTriangle,
+  TrashIcon as Trash2,
+} from "@heroicons/react/24/solid";
 import {
   pauseAllActiveKeys,
   resetAllHwid,

@@ -8,9 +8,9 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Safety API - Dashboard Administrativa',
-  description: 'Safety API é uma plataforma completa para gerenciamento de licenças, autenticação e controle de acesso com foco em segurança.',
-  generator: 'nash',
+  title: 'RP GORDAO - Dashboard Administrativa',
+  description: 'RP GORDAO API - Plataforma completa para gerenciamento de licenças, autenticação e controle de acesso.',
+  generator: 'rpgordao',
   icons: {
     icon: [
       {

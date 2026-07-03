@@ -12,6 +12,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+
+  async rewrites() {
+    return [
+      {
+        source: "/api-proxy/:path*",
+        destination: "https://gordao0ofc.discloud.app/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
