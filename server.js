@@ -1,19 +1,19 @@
-// Entry point para a Discloud — inicia o servidor standalone do Next.js
+// Entry point para a Discloud — inicia o Next.js em modo producao
 process.env.NODE_ENV = 'production';
-process.env.PORT = process.env.PORT || '8080';
-process.env.HOSTNAME = '0.0.0.0';
 
-const path = require('path');
-const fs = require('fs');
+const { createServer } = require('http');
+const { parse } = require('url');
+const next = require('next');
 
-const standalonePath = path.join(__dirname, '.next', 'standalone', 'server.js');
+const port = parseInt(process.env.PORT || '8080', 10);
+const app = next({ dev: false });
+const handle = app.getRequestHandler();
 
-if (!fs.existsSync(standalonePath)) {
-  console.error('❌ ERRO: .next/standalone/server.js não encontrado!');
-  console.error('   O build não foi executado corretamente.');
-  console.error('   Execute: npm run build && node build.js');
-  process.exit(1);
-}
-
-console.log('> Iniciando servidor standalone...');
-require(standalonePath);
+app.prepare().then(() => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url, true);
+    handle(req, res, parsedUrl);
+  }).listen(port, '0.0.0.0', () => {
+    console.log(`> GordaoAdmin rodando em http://0.0.0.0:${port}`);
+  });
+});
