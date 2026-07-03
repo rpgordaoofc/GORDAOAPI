@@ -491,6 +491,23 @@ export async function ownerDeleteAdmin(
   });
 }
 
+export async function testWebhook(): Promise<ApiResponse<{ latencyMs: number }>> {
+  return apiRequest<{ latencyMs: number }>("/v1/admin/settings/webhooks/test", {
+    method: "POST",
+  });
+}
+
+export async function pingHealth(): Promise<ApiResponse<{ latencyMs: number; timestamp: string }>> {
+  return apiRequest<{ latencyMs: number; timestamp: string }>("/v1/admin/health/ping");
+}
+
+export function getExportLogsUrl(format: "json" | "csv", level?: string, limit?: number): string {
+  const params = new URLSearchParams({ format });
+  if (level) params.append("level", level);
+  if (limit) params.append("limit", String(limit));
+  return `${(process.env.NEXT_PUBLIC_API_BASE_URL || "https://gordao0ofc.discloud.app").replace(/\/$/, "")}/v1/admin/audit-logs/export?${params}`;
+}
+
 // Overview
 export async function getOverview(): Promise<ApiResponse<OverviewData>> {
   return apiRequest<OverviewData>("/v1/admin/overview");
