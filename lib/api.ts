@@ -843,3 +843,47 @@ export async function getSettings(): Promise<ApiResponse<SettingsData>> {
     },
   };
 }
+
+// ── Analytics & Security Endpoints ────────────────────────────────────────────
+export interface ActiveSession {
+  id: string; adminId: string; username: string; displayName: string;
+  role: string; ip: string | null; createdAt: string; userAgent: string | null;
+}
+
+export interface SuspiciousIP {
+  ip: string; count: number; lastSeen: string; events: string[];
+}
+
+export interface KeyGrowthItem { date: string; count: number; }
+
+export interface TopProduct {
+  productId: string; name: string; total: number; active: number;
+}
+
+export interface SystemAlert {
+  type: "error" | "warning" | "info"; code: string; message: string; count: number;
+}
+
+export async function getActiveSessions(): Promise<ApiResponse<{ items: ActiveSession[]; total: number }>> {
+  return apiRequest<{ items: ActiveSession[]; total: number }>("/v1/admin/sessions/active");
+}
+
+export async function getSuspiciousIPs(): Promise<ApiResponse<{ items: SuspiciousIP[] }>> {
+  return apiRequest<{ items: SuspiciousIP[] }>("/v1/admin/security/suspicious-ips");
+}
+
+export async function getKeysGrowth(days = 30): Promise<ApiResponse<{ items: KeyGrowthItem[] }>> {
+  return apiRequest<{ items: KeyGrowthItem[] }>(`/v1/admin/analytics/keys-growth?days=${days}`);
+}
+
+export async function getFailedLogins(): Promise<ApiResponse<{ count24h: number; recent: Array<{ ip: string; event: string; createdAt: string }> }>> {
+  return apiRequest<{ count24h: number; recent: Array<{ ip: string; event: string; createdAt: string }> }>("/v1/admin/security/failed-logins");
+}
+
+export async function getTopProducts(): Promise<ApiResponse<{ items: TopProduct[] }>> {
+  return apiRequest<{ items: TopProduct[] }>("/v1/admin/analytics/top-products");
+}
+
+export async function getAlerts(): Promise<ApiResponse<{ items: SystemAlert[]; total: number }>> {
+  return apiRequest<{ items: SystemAlert[]; total: number }>("/v1/admin/alerts");
+}
