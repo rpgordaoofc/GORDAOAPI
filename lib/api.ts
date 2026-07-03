@@ -819,7 +819,7 @@ export async function getSettings(): Promise<ApiResponse<SettingsData>> {
       apiVersion: "Gordao APIv1.0.0",
       rateLimit: 100,
       timeout: 30,
-      keyPrefix: "SAFE-",
+      keyPrefix: process.env.KEY_PREFIX || "RPGORDAO",
       webhooksEnabled: webhooks.success ? Boolean(webhooks.data?.enabled) : true,
       stats: overview.success && overview.data ? {
         totalKeys: overview.data.keys,

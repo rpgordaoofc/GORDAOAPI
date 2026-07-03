@@ -1,6 +1,5 @@
 import { HeroSection } from "@/components/landing/hero-section";
-import { FeaturesSection } from "@/components/landing/features-section";
-import { BentoSection } from "@/components/landing/bento-section";
+import { LiveSection } from "@/components/landing/live-section";
 import { StatsSection } from "@/components/landing/stats-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { Footer } from "@/components/landing/footer";
@@ -11,8 +10,7 @@ export default function LandingPage() {
     <main className="min-h-screen bg-[#060606]" style={{ cursor: "none" }}>
       <CustomCursor />
       <HeroSection />
-      <FeaturesSection />
-      <BentoSection />
+      <LiveSection />
       <StatsSection />
       <CtaSection />
       <Footer />
