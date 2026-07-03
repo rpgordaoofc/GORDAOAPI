@@ -57,7 +57,7 @@ const testimonialsRow2 = [
   {
     quote:
       "Migramos de uma solucao propria para a RP GORDAO e foi a melhor decisao. A economia de tempo e recursos foi significativa.",
-    name: "Lucas Oliveira",
+    name: "Carlos Oliveira",
     title: "Tech Lead, StartupXYZ",
   },
 ];
