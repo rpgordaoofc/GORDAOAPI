@@ -5,10 +5,12 @@ import { TestimonialsSection } from "@/components/landing/testimonials-section";
 import { GlobeSection } from "@/components/landing/globe-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { Footer } from "@/components/landing/footer";
+import { CustomCursor } from "@/components/landing/cursor";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background" style={{ cursor: "none" }}>
+      <CustomCursor />
       <HeroSection />
       <FeaturesSection />
       <BentoSection />
