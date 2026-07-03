@@ -231,7 +231,7 @@ export default function DashboardOverview() {
         {/* Activity Section */}
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Audit Log */}
-          <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 animate-slide-up opacity-0 stagger-4" style={{ animationFillMode: "forwards" }}>
+          <div className="rounded-xl border border-white/5 bg-white/3 p-5 animate-slide-up opacity-0 stagger-4" style={{ animationFillMode: "forwards" }}>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h3 className="flex items-center gap-2 text-sm font-bold">
@@ -267,7 +267,7 @@ export default function DashboardOverview() {
 
           {/* Quick Actions + System Status */}
           <div className="space-y-5">
-            <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 animate-slide-up opacity-0 stagger-4" style={{ animationFillMode: "forwards" }}>
+            <div className="rounded-xl border border-white/5 bg-white/3 p-5 animate-slide-up opacity-0 stagger-4" style={{ animationFillMode: "forwards" }}>
               <h3 className="flex items-center gap-2 text-sm font-bold">
                 <Activity className="h-4 w-4 text-primary" />
                 Acoes Rapidas
@@ -280,7 +280,7 @@ export default function DashboardOverview() {
                 <QuickActionCard href="/dashboard/users" title="Usuarios" description="Gerenciar usuarios vinculados" />
               </div>
             </div>
-            <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 animate-slide-up opacity-0 stagger-5" style={{ animationFillMode: "forwards" }}>
+            <div className="rounded-xl border border-white/5 bg-white/3 p-5 animate-slide-up opacity-0 stagger-5" style={{ animationFillMode: "forwards" }}>
               <h3 className="flex items-center gap-2 text-sm font-bold">
                 <TrendingUp className="h-4 w-4 text-primary" />
                 Status em Tempo Real
@@ -298,7 +298,7 @@ export default function DashboardOverview() {
 
         {/* Charts */}
         <div className="grid gap-6 lg:grid-cols-5 animate-slide-up opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
-          <div className="lg:col-span-2 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5">
+          <div className="lg:col-span-2 rounded-xl border border-white/5 bg-white/3 p-5">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-bold">Distribuicao de Licencas</h3>
@@ -345,7 +345,7 @@ export default function DashboardOverview() {
             </div>
           </div>
 
-          <div className="lg:col-span-3 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5">
+          <div className="lg:col-span-3 rounded-xl border border-white/5 bg-white/3 p-5">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-bold">Status por Categoria</h3>

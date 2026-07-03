@@ -89,12 +89,15 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-sidebar-border bg-sidebar/95 backdrop-blur-md transition-transform duration-300 lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-60 flex-col border-r transition-transform duration-300 lg:translate-x-0",
           isOpen ? "translate-x-0" : "-translate-x-full"
         )}
+        style={{
+          background: "#0a0a0a",
+          borderColor: "rgba(255,255,255,0.06)",
+        }}
       >
         {/* Logo */}
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-5">
