@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
 import {
@@ -100,10 +99,29 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* Logo */}
         <div className="flex h-16 items-center justify-between border-b border-sidebar-border px-6">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sidebar-primary">
-              <Image src="/2.png" alt="RP GORDAO" width={16} height={16} className="h-6 w-6 object-contain" priority />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sidebar-primary red-glow-sm shrink-0">
+              <svg width="22" height="22" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Escudo */}
+                <path
+                  d="M50 6 L88 20 L88 52 C88 72 70 88 50 94 C30 88 12 72 12 52 L12 20 Z"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="6"
+                  strokeLinejoin="round"
+                />
+                {/* Letra R */}
+                <text
+                  x="22"
+                  y="66"
+                  fontFamily="Arial Black, sans-serif"
+                  fontWeight="900"
+                  fontSize="38"
+                  fill="white"
+                  letterSpacing="-2"
+                >RG</text>
+              </svg>
             </div>
-            <span className="font-semibold text-sidebar-foreground">
+            <span className="font-bold tracking-wide text-sidebar-foreground">
               RP GORDAO
             </span>
           </Link>
