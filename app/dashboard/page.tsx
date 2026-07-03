@@ -210,123 +210,53 @@ export default function DashboardOverview() {
         onMenuClick={toggleSidebar}
       />
 
-      <main className="p-4 lg:p-6">
+      <main className="p-4 lg:p-6 space-y-6">
         {/* Primary Stats Grid */}
-        <div className="grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-4">
-          <StatsCard
-            title="Total de Licencas"
-            value={loading ? "-" : data?.keys ?? 0}
-            icon={Key}
-            description="Todas as keys registradas"
-            delay={0}
-          />
-          <StatsCard
-            title="Usuarios Vinculados"
-            value={loading ? "-" : data?.users ?? 0}
-            icon={Users}
-            description="Contas ativas no sistema"
-            delay={100}
-          />
-          <StatsCard
-            title="Produtos"
-            value={loading ? "-" : data?.products ?? 0}
-            icon={Package}
-            description="Produtos cadastrados"
-            delay={200}
-          />
-          <StatsCard
-            title="Licencas Ativas"
-            value={loading ? "-" : data?.activeKeys ?? 0}
-            icon={CheckCircle}
-            description="Keys validas e operacionais"
-            trend={{ value: 12, isPositive: true }}
-            delay={300}
-          />
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+          <StatsCard title="Total de Licencas" value={loading ? "-" : data?.keys ?? 0} icon={Key} description="Todas as keys registradas" delay={0} />
+          <StatsCard title="Usuarios Vinculados" value={loading ? "-" : data?.users ?? 0} icon={Users} description="Contas ativas no sistema" delay={100} />
+          <StatsCard title="Produtos" value={loading ? "-" : data?.products ?? 0} icon={Package} description="Produtos cadastrados" delay={200} />
+          <StatsCard title="Licencas Ativas" value={loading ? "-" : data?.activeKeys ?? 0} icon={CheckCircle} description="Keys validas e operacionais" trend={{ value: 12, isPositive: true }} delay={300} />
         </div>
 
         {/* Secondary Stats Grid */}
-        <div className="mt-4 lg:mt-6 grid gap-4 sm:gap-6 grid-cols-2 lg:grid-cols-5">
-          <StatsCard
-            title="Keys Banidas"
-            value={loading ? "-" : data?.bannedKeys ?? 0}
-            icon={Ban}
-            description="Licencas bloqueadas"
-            delay={400}
-          />
-          <StatsCard
-            title="Keys Pausadas"
-            value={loading ? "-" : data?.pausedKeys ?? 0}
-            icon={Pause}
-            description="Licencas temporariamente pausadas"
-            delay={500}
-          />
-          <StatsCard
-            title="Keys Expiradas"
-            value={loading ? "-" : data?.expiredKeys ?? 0}
-            icon={Clock}
-            description="Licencas vencidas"
-            delay={550}
-          />
-          <StatsCard
-            title="Pendentes"
-            value={loading ? "-" : data?.pendingKeys ?? 0}
-            icon={Activity}
-            description="Aguardando primeiro vinculo"
-            delay={575}
-          />
-          <StatsCard
-            title="Expirando em 7 dias"
-            value={loading ? "-" : data?.expiringSoon ?? 0}
-            icon={Clock}
-            description="Licencas proximas do vencimento"
-            trend={{ value: 3, isPositive: false }}
-            delay={600}
-          />
+        <div className="grid gap-4 grid-cols-2 lg:grid-cols-5">
+          <StatsCard title="Keys Banidas" value={loading ? "-" : data?.bannedKeys ?? 0} icon={Ban} description="Licencas bloqueadas" delay={400} />
+          <StatsCard title="Keys Pausadas" value={loading ? "-" : data?.pausedKeys ?? 0} icon={Pause} description="Licencas temporariamente pausadas" delay={500} />
+          <StatsCard title="Keys Expiradas" value={loading ? "-" : data?.expiredKeys ?? 0} icon={Clock} description="Licencas vencidas" delay={550} />
+          <StatsCard title="Pendentes" value={loading ? "-" : data?.pendingKeys ?? 0} icon={Activity} description="Aguardando primeiro vinculo" delay={575} />
+          <StatsCard title="Expirando em 7 dias" value={loading ? "-" : data?.expiringSoon ?? 0} icon={Clock} description="Licencas proximas do vencimento" trend={{ value: 3, isPositive: false }} delay={600} />
         </div>
 
         {/* Activity Section */}
-        <div className="mt-6 lg:mt-8 grid gap-4 lg:gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-2">
           {/* Audit Log */}
-          <div
-            className="rounded-xl border border-border bg-card p-4 lg:p-6 animate-slide-up opacity-0 stagger-4"
-            style={{ animationFillMode: "forwards" }}
-          >
+          <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 animate-slide-up opacity-0 stagger-4" style={{ animationFillMode: "forwards" }}>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h3 className="flex items-center gap-2 text-base lg:text-lg font-semibold">
-                  <ShieldAlert className="h-5 w-5 text-muted-foreground" />
+                <h3 className="flex items-center gap-2 text-sm font-bold">
+                  <ShieldAlert className="h-4 w-4 text-primary" />
                   Audit Log
                 </h3>
-                <div className="mt-1 flex items-center gap-2 text-xs lg:text-sm text-muted-foreground">
-                  <span>Atividades recentes em tempo real</span>
-                  <span className="hidden sm:inline">•</span>
-                  <span>{auditEntries.length} evento(s)</span>
-                </div>
+                <p className="mt-0.5 text-xs text-muted-foreground/70">
+                  Atividades recentes em tempo real • {auditEntries.length} evento(s)
+                </p>
               </div>
               <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={fetchAuditLogs}
-                  disabled={auditLoading}
-                  className="bg-transparent gap-2"
-                >
-                  <RefreshCw className={`h-4 w-4 ${auditLoading ? "animate-spin" : ""}`} />
+                <Button variant="outline" size="sm" onClick={fetchAuditLogs} disabled={auditLoading} className="bg-transparent gap-1.5 h-8 text-xs border-border/50">
+                  <RefreshCw className={`h-3.5 w-3.5 ${auditLoading ? "animate-spin" : ""}`} />
                   Atualizar
                 </Button>
-                <Button variant="outline" size="sm" asChild className="bg-transparent">
+                <Button variant="outline" size="sm" asChild className="bg-transparent h-8 text-xs border-border/50">
                   <Link href="/dashboard/logs">Ver Todos</Link>
                 </Button>
               </div>
             </div>
-            <div className="mt-6">
+            <div className="mt-5">
               {auditLoading && auditEntries.length === 0 ? (
                 <div className="space-y-2">
-                  {[...Array(4)].map((_, index) => (
-                    <div
-                      key={index}
-                      className="h-14 rounded-lg border border-border/60 bg-muted/30 animate-pulse"
-                    />
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="h-12 rounded-lg border border-border/40 bg-muted/20 animate-pulse" />
                   ))}
                 </div>
               ) : (
@@ -336,56 +266,27 @@ export default function DashboardOverview() {
           </div>
 
           {/* Quick Actions + System Status */}
-          <div className="space-y-6">
-            {/* Quick Actions */}
-            <div
-              className="rounded-xl border border-border bg-card p-6 animate-slide-up opacity-0 stagger-4"
-              style={{ animationFillMode: "forwards" }}
-            >
-              <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <Activity className="h-5 w-5 text-muted-foreground" />
+          <div className="space-y-5">
+            <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 animate-slide-up opacity-0 stagger-4" style={{ animationFillMode: "forwards" }}>
+              <h3 className="flex items-center gap-2 text-sm font-bold">
+                <Activity className="h-4 w-4 text-primary" />
                 Acoes Rapidas
               </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Acesse as funcionalidades mais utilizadas
-              </p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <QuickActionCard
-                  href="/dashboard/keys"
-                  title="Gerenciar Keys"
-                  description="Buscar, editar e gerenciar licencas"
-                />
-                <QuickActionCard
-                  href="/dashboard/bulk-actions"
-                  title="Acoes em Massa"
-                  description="Executar operacoes em lote"
-                />
-                <QuickActionCard
-                  href="/dashboard/settings"
-                  title="Configuracoes"
-                  description="Ajustar sistema e manutencao"
-                />
-                <QuickActionCard
-                  href="/dashboard/users"
-                  title="Usuarios"
-                  description="Gerenciar usuarios vinculados"
-                />
+              <p className="mt-0.5 text-xs text-muted-foreground/70">Acesse as funcionalidades mais utilizadas</p>
+              <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                <QuickActionCard href="/dashboard/keys" title="Gerenciar Keys" description="Buscar, editar e gerenciar licencas" />
+                <QuickActionCard href="/dashboard/bulk-actions" title="Acoes em Massa" description="Executar operacoes em lote" />
+                <QuickActionCard href="/dashboard/settings" title="Configuracoes" description="Ajustar sistema e manutencao" />
+                <QuickActionCard href="/dashboard/users" title="Usuarios" description="Gerenciar usuarios vinculados" />
               </div>
             </div>
-
-            {/* System Status */}
-            <div
-              className="rounded-xl border border-border bg-card p-6 animate-slide-up opacity-0 stagger-5"
-              style={{ animationFillMode: "forwards" }}
-            >
-              <h3 className="flex items-center gap-2 text-lg font-semibold">
-                <TrendingUp className="h-5 w-5 text-muted-foreground" />
+            <div className="rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5 animate-slide-up opacity-0 stagger-5" style={{ animationFillMode: "forwards" }}>
+              <h3 className="flex items-center gap-2 text-sm font-bold">
+                <TrendingUp className="h-4 w-4 text-primary" />
                 Status em Tempo Real
               </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Indicadores baseados na API admin
-              </p>
-              <div className="mt-6 space-y-4">
+              <p className="mt-0.5 text-xs text-muted-foreground/70">Indicadores baseados na API admin</p>
+              <div className="mt-4 space-y-3.5">
                 <StatusItem label="API Status" status={data ? "Operacional" : "Indisponível"} percentage={data ? 100 : 0} />
                 <StatusItem label="Keys Ativas" status={String(data?.activeKeys ?? 0)} percentage={data?.keys ? ((data.activeKeys / data.keys) * 100) : 0} />
                 <StatusItem label="Keys Pendentes" status={String(data?.pendingKeys ?? 0)} percentage={data?.keys ? ((data.pendingKeys / data.keys) * 100) : 0} />
@@ -395,183 +296,111 @@ export default function DashboardOverview() {
           </div>
         </div>
 
-        <div
-          className="mt-8 grid gap-4 lg:gap-6 lg:grid-cols-5 animate-slide-up opacity-0"
-          style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}
-        >
-          <div className="lg:col-span-2 rounded-xl border border-border bg-card p-5">
+        {/* Charts */}
+        <div className="grid gap-6 lg:grid-cols-5 animate-slide-up opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
+          <div className="lg:col-span-2 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold">Distribuicao de Licencas</h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">Status atual das keys</p>
+                <h3 className="text-sm font-bold">Distribuicao de Licencas</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground/70">Status atual das keys</p>
               </div>
               <span className="text-2xl font-bold tabular-nums">{loading ? "-" : data?.keys ?? 0}</span>
             </div>
-
-            <ChartContainer
-              className="mx-auto mt-4 aspect-square max-h-[200px]"
-              config={{
-                active: { label: "Ativas", color: "oklch(0.72 0.19 142)" },
-                paused: { label: "Pausadas", color: "oklch(0.75 0.18 55)" },
-                banned: { label: "Banidas", color: "oklch(0.63 0.24 25)" },
-                expired: { label: "Expiradas", color: "oklch(0.55 0 0)" },
-                pending: { label: "Pendentes", color: "oklch(0.62 0.18 250)" },
-              }}
-            >
+            <ChartContainer className="mx-auto mt-4 aspect-square max-h-[200px]" config={{
+              active: { label: "Ativas", color: "oklch(0.72 0.19 142)" },
+              paused: { label: "Pausadas", color: "oklch(0.75 0.18 55)" },
+              banned: { label: "Banidas", color: "oklch(0.63 0.24 25)" },
+              expired: { label: "Expiradas", color: "oklch(0.55 0 0)" },
+              pending: { label: "Pendentes", color: "oklch(0.62 0.18 250)" },
+            }}>
               <ResponsiveContainer>
                 <PieChart>
-                  <Pie
-                    data={[
-                      { key: "active", name: "Ativas", value: data?.activeKeys ?? 0, fill: "var(--color-active)" },
-                      { key: "paused", name: "Pausadas", value: data?.pausedKeys ?? 0, fill: "var(--color-paused)" },
-                      { key: "banned", name: "Banidas", value: data?.bannedKeys ?? 0, fill: "var(--color-banned)" },
-                      { key: "expired", name: "Expiradas", value: data?.expiredKeys ?? 0, fill: "var(--color-expired)" },
-                      { key: "pending", name: "Pendentes", value: data?.pendingKeys ?? 0, fill: "var(--color-pending)" },
-                    ]}
-                    dataKey="value"
-                    nameKey="name"
-                    innerRadius={55}
-                    outerRadius={85}
-                    stroke="var(--background)"
-                    strokeWidth={2}
-                    isAnimationActive={!loading}
-                  >
-                    {[
-                      "var(--color-active)",
-                      "var(--color-paused)",
-                      "var(--color-banned)",
-                      "var(--color-expired)",
-                      "var(--color-pending)",
-                    ].map((fill, i) => (
+                  <Pie data={[
+                    { name: "Ativas", value: data?.activeKeys ?? 0 },
+                    { name: "Pausadas", value: data?.pausedKeys ?? 0 },
+                    { name: "Banidas", value: data?.bannedKeys ?? 0 },
+                    { name: "Expiradas", value: data?.expiredKeys ?? 0 },
+                    { name: "Pendentes", value: data?.pendingKeys ?? 0 },
+                  ]} dataKey="value" nameKey="name" innerRadius={55} outerRadius={85} stroke="var(--background)" strokeWidth={2} isAnimationActive={!loading}>
+                    {["oklch(0.72 0.19 142)", "oklch(0.75 0.18 55)", "oklch(0.63 0.24 25)", "oklch(0.55 0 0)", "oklch(0.62 0.18 250)"].map((fill, i) => (
                       <Cell key={i} fill={fill} />
                     ))}
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
             </ChartContainer>
-
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.72 0.19 142)" }} />
-                Ativas <span className="font-medium text-foreground">{loading ? "-" : data?.activeKeys ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.75 0.18 55)" }} />
-                Pausadas <span className="font-medium text-foreground">{loading ? "-" : data?.pausedKeys ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.63 0.24 25)" }} />
-                Banidas <span className="font-medium text-foreground">{loading ? "-" : data?.bannedKeys ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.55 0 0)" }} />
-                Expiradas <span className="font-medium text-foreground">{loading ? "-" : data?.expiredKeys ?? 0}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                <span className="h-2 w-2 rounded-full shrink-0" style={{ background: "oklch(0.62 0.18 250)" }} />
-                Pendentes <span className="font-medium text-foreground">{loading ? "-" : data?.pendingKeys ?? 0}</span>
-              </div>
+            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1.5">
+              {[
+                { color: "oklch(0.72 0.19 142)", label: "Ativas", value: data?.activeKeys },
+                { color: "oklch(0.75 0.18 55)", label: "Pausadas", value: data?.pausedKeys },
+                { color: "oklch(0.63 0.24 25)", label: "Banidas", value: data?.bannedKeys },
+                { color: "oklch(0.55 0 0)", label: "Expiradas", value: data?.expiredKeys },
+                { color: "oklch(0.62 0.18 250)", label: "Pendentes", value: data?.pendingKeys },
+              ].map(({ color, label, value }) => (
+                <div key={label} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <span className="h-2 w-2 rounded-full shrink-0" style={{ background: color }} />
+                  {label} <span className="font-semibold text-foreground">{loading ? "-" : value ?? 0}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="lg:col-span-3 rounded-xl border border-border bg-card p-5">
+          <div className="lg:col-span-3 rounded-xl border border-border/50 bg-card/60 backdrop-blur-sm p-5">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-semibold">Status por Categoria</h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">Comparativo entre os status das licencas</p>
+                <h3 className="text-sm font-bold">Status por Categoria</h3>
+                <p className="mt-0.5 text-xs text-muted-foreground/70">Comparativo entre os status</p>
               </div>
               <div className="flex gap-0.5 rounded-lg bg-muted/40 p-0.5">
-                <button
-                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
-                    categoryChartMode === "bars" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={() => setCategoryChartMode("bars")}
-                  type="button"
-                >
-                  Barras
-                </button>
-                <button
-                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
-                    categoryChartMode === "area" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={() => setCategoryChartMode("area")}
-                  type="button"
-                >
-                  Area
-                </button>
-                <button
-                  className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${
-                    categoryChartMode === "radar" ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={() => setCategoryChartMode("radar")}
-                  type="button"
-                >
-                  Radar
-                </button>
+                {(["bars", "area", "radar"] as const).map((mode) => (
+                  <button key={mode} className={`rounded-md px-2.5 py-1 text-[11px] font-medium transition-colors ${categoryChartMode === mode ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`} onClick={() => setCategoryChartMode(mode)} type="button">
+                    {mode === "bars" ? "Barras" : mode === "area" ? "Area" : "Radar"}
+                  </button>
+                ))}
               </div>
             </div>
-
-            <ChartContainer
-              className="mt-4 h-[240px] w-full"
-              config={{
-                value: { label: "Keys", color: "oklch(0.7 0 0)" },
-              }}
-            >
+            <ChartContainer className="mt-4 h-[240px] w-full" config={{ value: { label: "Keys", color: "oklch(0.55 0.22 25)" } }}>
               <ResponsiveContainer>
                 {categoryChartMode === "bars" ? (
-                  <BarChart
-                    data={[
-                      { name: "Ativas", value: data?.activeKeys ?? 0, fill: "var(--color-active)" },
-                      { name: "Pausadas", value: data?.pausedKeys ?? 0, fill: "var(--color-paused)" },
-                      { name: "Banidas", value: data?.bannedKeys ?? 0, fill: "var(--color-banned)" },
-                      { name: "Expiradas", value: data?.expiredKeys ?? 0, fill: "var(--color-expired)" },
-                      { name: "Pendentes", value: data?.pendingKeys ?? 0, fill: "var(--color-pending)" },
-                    ]}
-                    margin={{ top: 6, right: 12, bottom: 0, left: 0 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="name" tickLine={false} axisLine={false} />
-                    <YAxis tickLine={false} axisLine={false} allowDecimals={false} />
-                    <Bar dataKey="value" radius={[4, 4, 0, 0]}>
-                      {[
-                        "var(--color-active)",
-                        "var(--color-paused)",
-                        "var(--color-banned)",
-                        "var(--color-expired)",
-                        "var(--color-pending)",
-                      ].map((fill, i) => (
+                  <BarChart data={[
+                    { name: "Ativas", value: data?.activeKeys ?? 0 },
+                    { name: "Pausadas", value: data?.pausedKeys ?? 0 },
+                    { name: "Banidas", value: data?.bannedKeys ?? 0 },
+                    { name: "Expiradas", value: data?.expiredKeys ?? 0 },
+                    { name: "Pendentes", value: data?.pendingKeys ?? 0 },
+                  ]} margin={{ top: 6, right: 12, bottom: 0, left: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="oklch(0.22 0.01 20 / 0.5)" />
+                    <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                    <YAxis tickLine={false} axisLine={false} allowDecimals={false} tick={{ fontSize: 11 }} />
+                    <Bar dataKey="value" radius={[5, 5, 0, 0]}>
+                      {["oklch(0.72 0.19 142)", "oklch(0.75 0.18 55)", "oklch(0.63 0.24 25)", "oklch(0.55 0 0)", "oklch(0.62 0.18 250)"].map((fill, i) => (
                         <Cell key={i} fill={fill} />
                       ))}
                     </Bar>
                   </BarChart>
                 ) : categoryChartMode === "area" ? (
-                  <AreaChart
-                    data={[
-                      { name: "Ativas", value: data?.activeKeys ?? 0 },
-                      { name: "Pausadas", value: data?.pausedKeys ?? 0 },
-                      { name: "Banidas", value: data?.bannedKeys ?? 0 },
-                      { name: "Expiradas", value: data?.expiredKeys ?? 0 },
-                      { name: "Pendentes", value: data?.pendingKeys ?? 0 },
-                    ]}
-                    margin={{ top: 6, right: 12, bottom: 0, left: 0 }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="name" tickLine={false} axisLine={false} />
-                    <YAxis tickLine={false} axisLine={false} allowDecimals={false} />
+                  <AreaChart data={[
+                    { name: "Ativas", value: data?.activeKeys ?? 0 },
+                    { name: "Pausadas", value: data?.pausedKeys ?? 0 },
+                    { name: "Banidas", value: data?.bannedKeys ?? 0 },
+                    { name: "Expiradas", value: data?.expiredKeys ?? 0 },
+                    { name: "Pendentes", value: data?.pendingKeys ?? 0 },
+                  ]} margin={{ top: 6, right: 12, bottom: 0, left: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="oklch(0.22 0.01 20 / 0.5)" />
+                    <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fontSize: 11 }} />
+                    <YAxis tickLine={false} axisLine={false} allowDecimals={false} tick={{ fontSize: 11 }} />
                     <Area type="monotone" dataKey="value" stroke="var(--color-value)" fill="var(--color-value)" fillOpacity={0.18} />
                   </AreaChart>
                 ) : (
-                  <RadarChart
-                    data={[
-                      { name: "Ativas", value: data?.activeKeys ?? 0 },
-                      { name: "Pausadas", value: data?.pausedKeys ?? 0 },
-                      { name: "Banidas", value: data?.bannedKeys ?? 0 },
-                      { name: "Expiradas", value: data?.expiredKeys ?? 0 },
-                      { name: "Pendentes", value: data?.pendingKeys ?? 0 },
-                    ]}
-                  >
-                    <PolarGrid />
-                    <PolarAngleAxis dataKey="name" />
+                  <RadarChart data={[
+                    { name: "Ativas", value: data?.activeKeys ?? 0 },
+                    { name: "Pausadas", value: data?.pausedKeys ?? 0 },
+                    { name: "Banidas", value: data?.bannedKeys ?? 0 },
+                    { name: "Expiradas", value: data?.expiredKeys ?? 0 },
+                    { name: "Pendentes", value: data?.pendingKeys ?? 0 },
+                  ]}>
+                    <PolarGrid stroke="oklch(0.22 0.01 20 / 0.5)" />
+                    <PolarAngleAxis dataKey="name" tick={{ fontSize: 11 }} />
                     <Radar dataKey="value" stroke="var(--color-value)" fill="var(--color-value)" fillOpacity={0.18} />
                   </RadarChart>
                 )}
@@ -596,12 +425,13 @@ function QuickActionCard({
   return (
     <Link
       href={href}
-      className="group rounded-lg border border-border bg-muted/30 p-4 transition-all hover:border-muted-foreground/30 hover:bg-muted/50"
+      className="group relative rounded-xl border border-border/60 bg-card/60 backdrop-blur-sm p-4 transition-all duration-200 hover:border-primary/40 hover:bg-card/80 hover:shadow-lg hover:shadow-primary/5"
     >
-      <p className="font-medium text-foreground group-hover:text-foreground">
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <p className="relative font-semibold text-sm text-foreground">
         {title}
       </p>
-      <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+      <p className="relative mt-1 text-xs text-muted-foreground/70">{description}</p>
     </Link>
   );
 }
@@ -617,14 +447,14 @@ function StatusItem({
 }) {
   return (
     <div>
-      <div className="flex items-center justify-between text-sm">
-        <span className="text-muted-foreground">{label}</span>
-        <span className="font-medium text-foreground">{status}</span>
+      <div className="flex items-center justify-between text-sm mb-2">
+        <span className="text-muted-foreground text-xs">{label}</span>
+        <span className="font-semibold text-foreground text-xs">{status}</span>
       </div>
-      <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
+      <div className="h-1 overflow-hidden rounded-full bg-muted/60">
         <div
-          className="h-full rounded-full bg-foreground/50 transition-all duration-500"
-          style={{ width: `${percentage}%` }}
+          className="h-full rounded-full bg-primary/70 transition-all duration-700"
+          style={{ width: `${Math.min(100, percentage)}%` }}
         />
       </div>
     </div>

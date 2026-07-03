@@ -41,7 +41,13 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarContext.Provider value={sidebarContext}>
-      <div className="min-h-screen bg-background">
+      {/* Animated background */}
+      <div className="animated-bg" aria-hidden="true" />
+      <div className="animated-grid" aria-hidden="true" />
+      <div className="animated-glow animated-glow-1" aria-hidden="true" />
+      <div className="animated-glow animated-glow-2" aria-hidden="true" />
+
+      <div className="relative z-10 min-h-screen bg-background/60">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="lg:pl-64">{children}</div>
       </div>
