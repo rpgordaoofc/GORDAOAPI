@@ -816,7 +816,7 @@ export async function getSettings(): Promise<ApiResponse<SettingsData>> {
     message: "Settings retrieved",
     data: {
       apiBaseUrl: API_BASE_URL,
-      apiVersion: "v2.0.0",
+      apiVersion: "Gordao APIv1.0.0",
       rateLimit: 100,
       timeout: 30,
       keyPrefix: "SAFE-",

@@ -270,8 +270,8 @@ const KeysPage = () => {
     const keysText = createdKeys.map(k => k.code).join("\n");
     navigator.clipboard.writeText(keysText);
     addToast({
-      title: "Copiado!",
-      description: "Keys copiadas para a area de transferencia",
+      title: "Copiado Key com Sucesso",
+      description: `${createdKeys.length} key(s) copiadas para a area de transferencia`,
       variant: "success",
     });
   };
