@@ -483,6 +483,14 @@ export async function ownerUpdateAdmin(
   });
 }
 
+export async function ownerDeleteAdmin(
+  id: string
+): Promise<ApiResponse<unknown>> {
+  return apiRequest<unknown>(`/v1/admin/owner/admins/${id}`, {
+    method: "DELETE",
+  });
+}
+
 // Overview
 export async function getOverview(): Promise<ApiResponse<OverviewData>> {
   return apiRequest<OverviewData>("/v1/admin/overview");
