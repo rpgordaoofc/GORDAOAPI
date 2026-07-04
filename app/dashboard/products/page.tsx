@@ -190,8 +190,8 @@ export default function ProductsPage() {
 
     await navigator.clipboard.writeText(productHash);
     addToast({
-      title: "Copiado com Sucesso",
-      description: "Hash do produto copiado para a área de transferência",
+      title: "RG Copiado",
+      description: "Copiado com sucesso para a área de transferência",
       variant: "success",
     });
   };
