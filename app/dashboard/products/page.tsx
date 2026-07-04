@@ -190,7 +190,7 @@ export default function ProductsPage() {
 
     await navigator.clipboard.writeText(productHash);
     addToast({
-      title: "Hash copiado",
+      title: "Copiado com Sucesso",
       description: "Hash do produto copiado para a área de transferência",
       variant: "success",
     });
@@ -337,14 +337,14 @@ export default function ProductsPage() {
                           </CardTitle>
                           <div className="mt-1.5 flex min-w-0 items-center gap-1.5">
                             <p className="truncate font-mono text-xs leading-none text-muted-foreground">
-                              {product.productHash || "Sem hash"}
+                              {product.productHash || "RP GORDAO"}
                             </p>
                             <Button
                               type="button"
                               variant="ghost"
                               size="sm"
                               className="h-5 w-5 shrink-0 p-0 text-muted-foreground hover:text-foreground"
-                              onClick={() => void handleCopyHash(product.productHash)}
+                              onClick={(e) => { e.stopPropagation(); void handleCopyHash(product.productHash); }}
                               title="Copiar hash"
                             >
                               <Copy className="h-3.5 w-3.5" />
