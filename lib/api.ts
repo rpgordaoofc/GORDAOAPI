@@ -111,7 +111,7 @@ export interface KeyInfoData {
   licenseKeyMasked: string;
   productId: string | null;
   productName?: string | null;
-  productHash?: string | null;
+  productRGA?: string | null;
   status: {
     paused: boolean;
     banned: boolean;
@@ -142,7 +142,7 @@ export interface MaintenanceData {
 export interface Product {
   _id: string;
   name: string;
-  productHash?: string | null;
+  productRGA?: string | null;
   hwidLockEnabled?: boolean;
   keysCount?: number;
   createdAt: string;
@@ -167,7 +167,7 @@ export interface KeyItem {
   durationDays?: number | null;
   activatedAt?: string | null;
   expiresAt: string | null;
-  productHash?: string | null;
+  productRGA?: string | null;
   usedBy: string | null;
   usedAt: string | null;
   hwid: string | null;
@@ -194,7 +194,7 @@ export interface UserItem {
     key: string | null;
     linkedAt: string | null;
     expiresAt: string | null;
-    productHash?: string | null;
+    productRGA?: string | null;
   }>;
   username: string;
   globalName: string;
@@ -283,7 +283,7 @@ export interface CreateKeysItem {
   code: string;
   durationDays?: number | null;
   activatesOn?: "bind" | string;
-  productHash?: string | null;
+  productRGA?: string | null;
   expiresAt: string | null;
 }
 

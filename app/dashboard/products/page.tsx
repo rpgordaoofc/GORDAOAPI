@@ -178,8 +178,8 @@ export default function ProductsPage() {
     setEditModalOpen(true);
   };
 
-  const handleCopyHash = async (productHash?: string | null) => {
-    if (!productHash) {
+  const handleCopyHash = async (productRGA?: string | null) => {
+    if (!productRGA) {
       addToast({
         title: "Sem hash",
         description: "Este produto não possui hash para copiar",
@@ -188,7 +188,7 @@ export default function ProductsPage() {
       return;
     }
 
-    await navigator.clipboard.writeText(productHash);
+    await navigator.clipboard.writeText(productRGA);
     addToast({
       title: "RG Copiado",
       description: "Copiado com sucesso para a área de transferência",
@@ -337,14 +337,14 @@ export default function ProductsPage() {
                           </CardTitle>
                           <div className="mt-1.5 flex min-w-0 items-center gap-1.5">
                             <p className="truncate font-mono text-xs leading-none text-muted-foreground">
-                              {product.productHash || "RP GORDAO"}
+                              {product.productRGA || "RP GORDAO"}
                             </p>
                             <Button
                               type="button"
                               variant="ghost"
                               size="sm"
                               className="h-5 w-5 shrink-0 p-0 text-muted-foreground hover:text-foreground"
-                              onClick={(e) => { e.stopPropagation(); void handleCopyHash(product.productHash); }}
+                              onClick={(e) => { e.stopPropagation(); void handleCopyHash(product.productRGA); }}
                               title="Copiar hash"
                             >
                               <Copy className="h-3.5 w-3.5" />

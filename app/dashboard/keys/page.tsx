@@ -497,7 +497,7 @@ const KeysPage = () => {
                             ? `${key.durationDays}d (vinculo)`
                             : "Pendente"}
                         </span>
-                        {key.productHash && (
+                        {key.productRGA && (
                           <span className="hidden md:flex items-center gap-1 font-mono">
                           </span>
                         )}
@@ -658,7 +658,7 @@ const KeysPage = () => {
               </div>
               <div className="rounded-lg border border-border bg-muted/30 p-3 sm:col-span-2">
                 <p className="text-xs text-muted-foreground">Product Hash</p>
-                <p className="mt-1 font-mono text-xs break-all">{selectedKeyDetails.productHash || "-"}</p>
+                <p className="mt-1 font-mono text-xs break-all">{selectedKeyDetails.productRGA || "-"}</p>
               </div>
               <div className="rounded-lg border border-border bg-muted/30 p-3">
                 <p className="text-xs text-muted-foreground">Duracao (dias)</p>

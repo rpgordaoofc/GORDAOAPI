@@ -622,10 +622,10 @@ export default function UsersPage() {
                   </div>
                 )}
 
-                {selectedUserKeyInfo?.productHash && (
+                {selectedUserKeyInfo?.productRGA && (
                   <div className="rounded-lg border border-border bg-muted/30 p-3">
                     <p className="text-xs text-muted-foreground">Product Hash</p>
-                    <p className="mt-1 font-mono text-xs break-all">{selectedUserKeyInfo.productHash}</p>
+                    <p className="mt-1 font-mono text-xs break-all">{selectedUserKeyInfo.productRGA}</p>
                   </div>
                 )}
               </div>
