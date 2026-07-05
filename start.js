@@ -1,25 +1,14 @@
-// start.js - Roda o build se necessário e depois inicia o servidor
-const { execSync, spawn } = require('child_process');
-const fs = require('fs');
+// start.js - Sempre faz rebuild e inicia o servidor
+const { execSync } = require('child_process');
 const path = require('path');
 
-const buildIdPath = path.join(__dirname, '.next', 'BUILD_ID');
-const forceRebuildPath = path.join(__dirname, '.next', 'REBUILD');
-
-// Força rebuild se .next não existe ou se marcador de rebuild existe
-if (!fs.existsSync(buildIdPath) || fs.existsSync(forceRebuildPath)) {
-  console.log('> Executando npm run build...');
-  try {
-    execSync('npm run build', { stdio: 'inherit', cwd: __dirname });
-    // Remove marcador de rebuild se existir
-    if (fs.existsSync(forceRebuildPath)) fs.unlinkSync(forceRebuildPath);
-    console.log('> Build concluído!');
-  } catch (err) {
-    console.error('> ERRO no build:', err.message);
-    process.exit(1);
-  }
-} else {
-  console.log('> Build encontrado, iniciando servidor...');
+console.log('> Executando npm run build...');
+try {
+  execSync('npm run build', { stdio: 'inherit', cwd: __dirname });
+  console.log('> Build concluído!');
+} catch (err) {
+  console.error('> ERRO no build:', err.message);
+  process.exit(1);
 }
 
 // Inicia o servidor Next.js

@@ -1,4 +1,15 @@
-// Entry point para a Discloud - build já incluído no deploy
+// Entry point para a Discloud - sempre faz build antes de subir
+const { execSync } = require('child_process');
+
+console.log('> Executando npm run build...');
+try {
+  execSync('npm run build', { stdio: 'inherit', cwd: __dirname });
+  console.log('> Build concluido!');
+} catch (err) {
+  console.error('> ERRO no build:', err.message);
+  process.exit(1);
+}
+
 process.env.NODE_ENV = 'production';
 
 const { createServer } = require('http');
