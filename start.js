@@ -4,12 +4,15 @@ const fs = require('fs');
 const path = require('path');
 
 const buildIdPath = path.join(__dirname, '.next', 'BUILD_ID');
+const forceRebuildPath = path.join(__dirname, '.next', 'REBUILD');
 
-// Verifica se o build existe
-if (!fs.existsSync(buildIdPath)) {
-  console.log('> Build não encontrado. Executando npm run build...');
+// Força rebuild se .next não existe ou se marcador de rebuild existe
+if (!fs.existsSync(buildIdPath) || fs.existsSync(forceRebuildPath)) {
+  console.log('> Executando npm run build...');
   try {
     execSync('npm run build', { stdio: 'inherit', cwd: __dirname });
+    // Remove marcador de rebuild se existir
+    if (fs.existsSync(forceRebuildPath)) fs.unlinkSync(forceRebuildPath);
     console.log('> Build concluído!');
   } catch (err) {
     console.error('> ERRO no build:', err.message);
