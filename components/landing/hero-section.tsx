@@ -147,6 +147,8 @@ export function HeroSection() {
 
       {/* Navbar */}
       <nav className="relative z-10 flex items-center justify-between px-8 py-5 border-b border-white/[0.04]">
+        {/* Barra lateral esquerda */}
+        <div className="absolute left-0 top-0 bottom-0 w-1" style={{ background: "linear-gradient(180deg, transparent 0%, #dc2626 30%, #991b1b 70%, transparent 100%)", boxShadow: "0 0 12px rgba(220,38,38,0.6)" }} />
         <div className="flex items-center gap-3">
           <div className="relative h-9 w-9 shrink-0">
             <Image src="/RG.png" alt="RP GORDAO" fill className="object-contain" />
