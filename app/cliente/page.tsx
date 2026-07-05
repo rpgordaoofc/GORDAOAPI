@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -138,19 +137,40 @@ function PaidModal({ plan, onClose }: { plan: Plan; onClose: () => void }) {
   );
 }
 
+type SessionUser = { name: string; email: string; image?: string; provider: string } | null;
+
 export default function ClienteDashboard() {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const [user, setUser] = useState<SessionUser>(null);
+  const [loading, setLoading] = useState(true);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
   const [paidPlan, setPaidPlan] = useState<Plan | null>(null);
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    // Lê cookie de sessão
+    const getCookie = (name: string) => {
+      const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+      return match ? match[2] : null;
+    };
+    const raw = getCookie("rpg_session");
+    if (!raw) {
+      router.replace("/registrar");
+      return;
+    }
+    try {
+      const decoded = JSON.parse(atob(raw));
+      setUser(decoded);
+    } catch {
       router.replace("/registrar");
     }
-  }, [status, router]);
+    setLoading(false);
+  }, [router]);
 
-  if (status === "loading") {
+  const handleLogout = () => {
+    window.location.href = "/api/auth/logout";
+  };
+
+  if (loading) {
     return (
       <div className="min-h-screen bg-[#060606] flex items-center justify-center">
         <span className="h-8 w-8 rounded-full border-2 border-red-600/30 border-t-red-600 animate-spin" />
@@ -158,9 +178,9 @@ export default function ClienteDashboard() {
     );
   }
 
-  const userName = session?.user?.name || "Cliente";
-  const userEmail = session?.user?.email || "";
-  const userImage = session?.user?.image;
+  const userName = user?.name || "Cliente";
+  const userEmail = user?.email || "";
+  const userImage = user?.image;
 
   return (
     <div className="min-h-screen bg-[#060606] relative overflow-hidden">
@@ -187,7 +207,7 @@ export default function ClienteDashboard() {
             <img src={userImage} alt={userName} className="w-7 h-7 rounded-full border border-white/10" />
           )}
           <span className="text-white/40 text-xs hidden sm:block truncate max-w-[160px]">{userEmail}</span>
-          <button onClick={() => signOut({ callbackUrl: "/" })}
+          <button onClick={handleLogout}
             className="text-white/30 hover:text-white/70 text-xs border border-white/[0.08] hover:border-white/20 px-3 py-1.5 rounded-lg transition-all">
             Sair
           </button>

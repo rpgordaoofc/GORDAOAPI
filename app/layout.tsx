@@ -2,7 +2,6 @@ import React from "react"
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import { SessionProvider } from "@/components/session-provider"
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -22,17 +21,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
       <body className="font-sans antialiased">
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+        {children}
         <Analytics />
       </body>
     </html>

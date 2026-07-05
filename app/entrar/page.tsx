@@ -1,6 +1,5 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -28,16 +27,6 @@ export default function EntrarPage() {
   const [loadingGoogle, setLoadingGoogle] = useState(false);
   const [loadingDiscord, setLoadingDiscord] = useState(false);
 
-  const handleGoogle = async () => {
-    setLoadingGoogle(true);
-    await signIn("google", { callbackUrl: "/cliente" });
-  };
-
-  const handleDiscord = async () => {
-    setLoadingDiscord(true);
-    await signIn("discord", { callbackUrl: "/cliente" });
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#060606] relative overflow-hidden">
       <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-red-600/10 blur-[120px] pointer-events-none" />
@@ -55,58 +44,36 @@ export default function EntrarPage() {
 
         <div className="bg-[#111111] border border-white/[0.06] rounded-2xl shadow-2xl shadow-black/60 overflow-hidden">
           <div className="h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent" />
-
           <div className="p-8">
             <div className="flex flex-col items-center mb-8">
               <div className="relative h-14 w-14 mb-4">
                 <Image src="/RG.png" alt="RP GORDAO" fill className="object-contain" />
               </div>
               <h1 className="text-2xl font-bold text-white tracking-tight">Entrar</h1>
-              <p className="text-sm text-white/30 mt-1 text-center">
-                Acesse sua conta RP GORDAO
-              </p>
+              <p className="text-sm text-white/30 mt-1 text-center">Acesse sua conta RP GORDAO</p>
             </div>
 
             <div className="space-y-3">
-              <button
-                onClick={handleGoogle}
-                disabled={loadingGoogle || loadingDiscord}
-                className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed text-gray-800 font-semibold py-3.5 rounded-xl text-sm transition-all duration-200 shadow-lg"
-              >
-                {loadingGoogle ? (
-                  <span className="h-4 w-4 rounded-full border-2 border-gray-400 border-t-gray-800 animate-spin" />
-                ) : (
-                  <GoogleIcon />
-                )}
+              <a href="/api/auth/google" onClick={() => setLoadingGoogle(true)}
+                className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3.5 rounded-xl text-sm transition-all duration-200 shadow-lg">
+                {loadingGoogle ? <span className="h-4 w-4 rounded-full border-2 border-gray-400 border-t-gray-800 animate-spin" /> : <GoogleIcon />}
                 {loadingGoogle ? "Redirecionando..." : "Entrar com Google"}
-              </button>
+              </a>
 
-              <button
-                onClick={handleDiscord}
-                disabled={loadingGoogle || loadingDiscord}
-                className="w-full flex items-center justify-center gap-3 bg-[#5865F2] hover:bg-[#4752c4] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl text-sm transition-all duration-200 shadow-lg"
-              >
-                {loadingDiscord ? (
-                  <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                ) : (
-                  <DiscordIcon />
-                )}
+              <a href="/api/auth/discord" onClick={() => setLoadingDiscord(true)}
+                className="w-full flex items-center justify-center gap-3 bg-[#5865F2] hover:bg-[#4752c4] text-white font-semibold py-3.5 rounded-xl text-sm transition-all duration-200 shadow-lg">
+                {loadingDiscord ? <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" /> : <DiscordIcon />}
                 {loadingDiscord ? "Redirecionando..." : "Entrar com Discord"}
-              </button>
+              </a>
             </div>
 
             <p className="text-center text-xs text-white/20 mt-6">
               Não tem conta?{" "}
-              <Link href="/registrar" className="text-red-400 hover:text-red-300 transition-colors">
-                Registrar
-              </Link>
+              <Link href="/registrar" className="text-red-400 hover:text-red-300 transition-colors">Registrar</Link>
             </p>
           </div>
         </div>
-
-        <p className="text-center text-xs text-white/10 mt-4">
-          RP GORDAO © {new Date().getFullYear()}
-        </p>
+        <p className="text-center text-xs text-white/10 mt-4">RP GORDAO © {new Date().getFullYear()}</p>
       </div>
     </div>
   );
