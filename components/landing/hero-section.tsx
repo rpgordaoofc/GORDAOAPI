@@ -165,10 +165,10 @@ export function HeroSection() {
           {["Features", "Segurança", "API", "Status"].map(item => (
             <a key={item} href="#" className="text-white/30 hover:text-white/80 text-sm transition-colors hidden md:block">{item}</a>
           ))}
-          <Link href="/registrar"
+          <Link href="/dashboard"
             className="relative group bg-red-600 hover:bg-red-500 text-white text-sm font-bold px-6 py-2.5 rounded transition-all overflow-hidden"
             style={{ boxShadow: "0 0 20px rgba(220,38,38,0.3)" }}>
-            <span className="relative z-10">Registrar</span>
+            <span className="relative z-10">Acessar Painel</span>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
           </Link>
         </div>
@@ -205,14 +205,11 @@ export function HeroSection() {
 
         {/* CTAs */}
         <div className={`flex flex-wrap justify-center gap-4 mb-16 transition-all duration-700 delay-400 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-          <Link href="/registrar"
+          <Link href="/dashboard"
             className="group relative bg-red-600 hover:bg-red-500 text-white font-bold px-10 py-4 rounded text-sm tracking-wider uppercase transition-all overflow-hidden"
             style={{ boxShadow: "0 0 30px rgba(220,38,38,0.4), 0 0 60px rgba(220,38,38,0.15)" }}>
-            <span className="relative z-10 flex items-center gap-2">Registrar <span className="group-hover:translate-x-1 transition-transform inline-block">→</span></span>
+            <span className="relative z-10 flex items-center gap-2">Acessar Dashboard <span className="group-hover:translate-x-1 transition-transform inline-block">→</span></span>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-          </Link>
-          <Link href="/entrar" className="border border-white/10 hover:border-red-600/50 text-white/60 hover:text-white font-semibold px-10 py-4 rounded text-sm tracking-wider uppercase transition-all hover:bg-red-600/5">
-            Já tenho conta
           </Link>
         </div>
 
